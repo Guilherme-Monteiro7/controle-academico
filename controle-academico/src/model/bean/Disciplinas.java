@@ -6,6 +6,7 @@ public class Disciplinas {
     private String codigo;
     private int cargaHoraria;
 
+    // Construtor padrão com inicialização de valores default (Abordagem 1)
     public Disciplinas() {
         this.id = 0;
         this.nome = "";
