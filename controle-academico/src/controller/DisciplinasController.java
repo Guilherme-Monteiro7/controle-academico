@@ -1,12 +1,12 @@
 package controller;
 
-import java.util.ArrayList;
+import java.util.List;
 import model.bean.Disciplinas;
 import model.dao.DisciplinasDAO;
 
 public class DisciplinasController {
 
-    public boolean insert(String nome, String codigo, int ch){
+    public boolean insert(String nome, String codigo, int ch) {
         Disciplinas d = new Disciplinas();
         d.setNome(nome);
         d.setCodigo(codigo);
@@ -16,12 +16,12 @@ public class DisciplinasController {
         return ad.insert(d);
     }
     
-    public ArrayList<Disciplinas> read(){
+    public List<Disciplinas> read() {
         DisciplinasDAO ad = new DisciplinasDAO();
         return ad.read();
     }
     
-    public boolean update(int id, String nome, String codigo, int ch){
+    public boolean update(int id, String nome, String codigo, int ch) {
         Disciplinas d = new Disciplinas();
         d.setId(id);
         d.setNome(nome);
@@ -32,7 +32,7 @@ public class DisciplinasController {
         return ad.update(d);
     }
     
-    public boolean delete(int id){
+    public boolean delete(int id) {
         Disciplinas d = new Disciplinas();
         d.setId(id);
         
