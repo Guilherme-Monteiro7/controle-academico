@@ -7,7 +7,10 @@ public class Disciplinas {
     private int cargaHoraria;
 
     public Disciplinas() {
-        // Construtor padrão necessário para frameworks de persistência e instanciação reflexiva
+        this.id = 0;
+        this.nome = "";
+        this.codigo = "";
+        this.cargaHoraria = 0;
     }
 
     public int getId() {
