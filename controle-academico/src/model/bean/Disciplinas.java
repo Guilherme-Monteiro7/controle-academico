@@ -1,10 +1,14 @@
 package model.bean;
 
 public class Disciplinas {
-    private int id;
+    private int id; // Ajustado para camelCase
     private String nome;
     private String codigo;
     private int cargaHoraria;
+
+    public Disciplinas() {
+        // Construtor padrão necessário para frameworks de persistência e instanciação reflexiva
+    }
 
     public int getId() {
         return id;
@@ -39,12 +43,7 @@ public class Disciplinas {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return this.nome;
     }
-    
-    public Disciplinas() {
-    }
-    
-    
 }
