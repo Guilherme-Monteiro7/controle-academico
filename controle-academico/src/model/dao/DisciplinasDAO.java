@@ -12,9 +12,8 @@ import model.bean.Disciplinas;
 
 public class DisciplinasDAO {
 
-    private final Connection con = ConnectionFactory.getConnection();
-
     public boolean insert(Disciplinas d) {
+        Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
 
         try {
@@ -35,6 +34,7 @@ public class DisciplinasDAO {
     }
 
     public List<Disciplinas> read() {
+        Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
         List<Disciplinas> vetorDisc = new ArrayList<>();
@@ -63,6 +63,7 @@ public class DisciplinasDAO {
     }
 
     public boolean update(Disciplinas d) {
+        Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
 
         try {
@@ -84,6 +85,7 @@ public class DisciplinasDAO {
     }
 
     public boolean delete(Disciplinas d) {
+        Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
 
         try {
