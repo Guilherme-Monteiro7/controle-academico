@@ -12,6 +12,7 @@ import model.bean.Aluno;
 public class AlunoDAO {
     
     // Constantes para evitar duplicação de literais de colunas e mensagens (Regras do SonarQube)
+    private static final String COL_ID_ALUNO = "idaluno";
     private static final String COL_ENDERECO = "endereco";
     private static final String COL_EMAIL = "email";
     private static final String COL_MATRICULA = "matrícula";
@@ -49,13 +50,12 @@ public class AlunoDAO {
         List<Aluno> vetorAlunos = new java.util.ArrayList<>();
         
         try {
-            // Substituído SELECT * por colunas explícitas
             stmt = con.prepareStatement("SELECT idaluno, nome, endereco, fone, email, matrícula, curso FROM aluno");
             rs = stmt.executeQuery();
             
             while (rs.next()) {
                 Aluno a = new Aluno();
-                a.setId(rs.getInt("idaluno"));
+                a.setId(rs.getInt(COL_ID_ALUNO));
                 a.setNome(rs.getString("nome"));
                 a.setEndereco(rs.getString(COL_ENDERECO));
                 a.setTelefone(rs.getString("fone"));
@@ -129,7 +129,7 @@ public class AlunoDAO {
             
             while (rs.next()) {
                 Aluno a = new Aluno();
-                a.setId(rs.getInt("idaluno")); // Código comentado removido
+                a.setId(rs.getInt(COL_ID_ALUNO));
                 a.setNome(rs.getString("nome"));
                 a.setEndereco(rs.getString(COL_ENDERECO));
                 a.setTelefone(rs.getString("fone"));
@@ -161,7 +161,7 @@ public class AlunoDAO {
             
             while (rs.next()) {
                 Aluno a = new Aluno();
-                a.setId(rs.getInt("idaluno")); // Código comentado removido
+                a.setId(rs.getInt(COL_ID_ALUNO));
                 a.setNome(rs.getString("nome"));
                 a.setEndereco(rs.getString(COL_ENDERECO));
                 a.setTelefone(rs.getString("fone"));
@@ -193,7 +193,7 @@ public class AlunoDAO {
             
             while (rs.next()) {
                 Aluno a = new Aluno();
-                a.setId(rs.getInt("idaluno")); // Código comentado removido
+                a.setId(rs.getInt(COL_ID_ALUNO));
                 a.setNome(rs.getString("nome"));
                 a.setEndereco(rs.getString(COL_ENDERECO));
                 a.setTelefone(rs.getString("fone"));
