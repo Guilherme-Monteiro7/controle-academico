@@ -3,6 +3,8 @@ package view;
 import conexao.ConnectionFactory;
 import controller.DisciplinasController;
 import java.sql.Connection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.bean.Disciplinas;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -16,14 +18,13 @@ import tablemodel.DisciplinaTableModel;
  */
 public class ConsultaDisciplinasView extends javax.swing.JFrame {
 
-    DisciplinaTableModel discModel;
-    DisciplinasController dc;
+    private DisciplinaTableModel discModel;
+    private transient DisciplinasController dc;
 
     public ConsultaDisciplinasView() {
         initComponents();
-        
+
         dc = new DisciplinasController();
-        
         discModel = new DisciplinaTableModel(dc.read());
         tabelaDisciplinas.setModel(discModel);
     }
@@ -45,48 +46,34 @@ public class ConsultaDisciplinasView extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosed(java.awt.event.WindowEvent evt) {
-                formWindowClosed(evt);
+                formWindowClosed();
             }
         });
 
         btnAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/insert.png"))); // NOI18N
         btnAdicionar.setText("Adicionar");
-        btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAdicionarActionPerformed(evt);
-            }
-        });
+        btnAdicionar.addActionListener(e -> btnAdicionarActionPerformed());
 
         btnImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/print.png"))); // NOI18N
         btnImprimir.setText("Imprimir listagem");
-        btnImprimir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnImprimirActionPerformed(evt);
-            }
-        });
+        btnImprimir.addActionListener(e -> btnImprimirActionPerformed());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Selecione o campo para busca:");
 
         ComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nenhum", "Nome", "Matrícula", "Curso" }));
-        ComboBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ComboBoxActionPerformed(evt);
-            }
-        });
+        ComboBox.addActionListener(e -> comboBoxActionPerformed());
 
         tabelaDisciplinas.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
+            new Object [][] {},
+            new String [] {}
         ));
         tabelaDisciplinas.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tabelaDisciplinasMouseClicked(evt);
+                tabelaDisciplinasMouseClicked();
             }
         });
         jScrollPane1.setViewportView(tabelaDisciplinas);
@@ -110,11 +97,7 @@ public class ConsultaDisciplinasView extends javax.swing.JFrame {
 
         btnsair1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/exit.png"))); // NOI18N
         btnsair1.setText("Voltar");
-        btnsair1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnsair1ActionPerformed(evt);
-            }
-        });
+        btnsair1.addActionListener(e -> btnsair1ActionPerformed());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -164,67 +147,63 @@ public class ConsultaDisciplinasView extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
+    private void btnAdicionarActionPerformed() {
         CadastroDisciplinasView cv = new CadastroDisciplinasView(null);
         cv.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnAdicionarActionPerformed
+    }
 
-    private void ComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxActionPerformed
+    private void comboBoxActionPerformed() {
         txtBusca.setText("");
-        if(ComboBox.getSelectedIndex()==0){
+        if (ComboBox.getSelectedIndex() == 0) {
             discModel = new DisciplinaTableModel(dc.read());
             tabelaDisciplinas.setModel(discModel);
         }
         txtBusca.requestFocus();
-    }//GEN-LAST:event_ComboBoxActionPerformed
+    }
 
-    private void tabelaDisciplinasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaDisciplinasMouseClicked
+    private void tabelaDisciplinasMouseClicked() {
         discModel = (DisciplinaTableModel) tabelaDisciplinas.getModel();
         Disciplinas d = discModel.getAluno(tabelaDisciplinas.getSelectedRow());
         CadastroDisciplinasView cd = new CadastroDisciplinasView(d);
         cd.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_tabelaDisciplinasMouseClicked
+    }
 
-    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        /*ViewPrincipal v = new ViewPrincipal();
-        v.setVisible(true);
-        this.dispose();*/
-    }//GEN-LAST:event_formWindowClosed
+    private void formWindowClosed() {
+        // Limpo código comentado morto
+    }
 
-    private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
+    private void btnImprimirActionPerformed() {
         Connection con = ConnectionFactory.getConnection();
         String src = "src/reports/listagemDisciplinas.jasper";
-        
         JasperPrint jp = null;
-        
-        try{
-            jp = JasperFillManager.fillReport(src, null, con);
-            
-        }catch(JRException ex){
-            System.out.println("erro ao gerar relatório de disciplinas"+ex);
-        }
-        
-        JasperViewer view = new JasperViewer(jp, false);
-        view.setVisible(true);
-    }//GEN-LAST:event_btnImprimirActionPerformed
 
-    private void btnsair1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsair1ActionPerformed
+        try {
+            jp = JasperFillManager.fillReport(src, null, con);
+        } catch (JRException ex) {
+            Logger.getLogger(ConsultaDisciplinasView.class.getName())
+                  .log(Level.SEVERE, "Erro ao gerar relatório de disciplinas", ex);
+        }
+
+        if (jp != null) {
+            JasperViewer view = new JasperViewer(jp, false);
+            view.setVisible(true);
+        }
+    }
+
+    private void btnsair1ActionPerformed() {
         ViewPrincipal v = new ViewPrincipal();
         v.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnsair1ActionPerformed
+    }
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -232,23 +211,13 @@ public class ConsultaDisciplinasView extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ConsultaDisciplinasView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ConsultaDisciplinasView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ConsultaDisciplinasView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ConsultaDisciplinasView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(ConsultaDisciplinasView.class.getName()).log(Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ConsultaDisciplinasView().setVisible(true);
-            }
-        });
+        java.awt.EventQueue.invokeLater(() -> new ConsultaDisciplinasView().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

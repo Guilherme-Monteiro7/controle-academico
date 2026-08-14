@@ -6,6 +6,8 @@ import controller.ProfessorDisciplinaController;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import model.bean.Disciplinas;
@@ -20,40 +22,37 @@ import tablemodel.ProfessorDisciplinaTableModel;
 
 public class ProfessorDisciplinaView extends javax.swing.JFrame {
 
+    private static final Logger LOGGER = Logger.getLogger(ProfessorDisciplinaView.class.getName());
+
     public Professor professor;
     public ProfessorDisciplinaController pcc = new ProfessorDisciplinaController();
     public ProfessorDisciplinaTableModel pt;
     public boolean alterar = false;
-    
+
     public ProfessorDisciplinaView() {
         initComponents();
     }
 
-     public void getListaDisciplinas(){
+    public void getListaDisciplinas() {
         DisciplinasController dc = new DisciplinasController();
-        
-        for(Disciplinas d : dc.read()){
+        for (Disciplinas d : dc.read()) {
             comboDisciplinas.addItem(d);
         }
     }
-    
-     
-    public void getDisciplinasDoProfessor(){
+
+    public void getDisciplinasDoProfessor() {
         pt = new ProfessorDisciplinaTableModel(pcc.getDisciplinasProfessor(this.professor.getIdprofessor()));
-        
         tabelaProfessor.setModel(pt);
-        
         tabelaProfessor.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         tabelaProfessor.getColumnModel().getColumn(0).setPreferredWidth(155);
         tabelaProfessor.getColumnModel().getColumn(1).setPreferredWidth(155);
         tabelaProfessor.getColumnModel().getColumn(2).setPreferredWidth(50);
         tabelaProfessor.getColumnModel().getColumn(3).setPreferredWidth(60);
         tabelaProfessor.getColumnModel().getColumn(4).setPreferredWidth(150);
-        limpar();       
-    } 
-    
-    
-    public void limpar(){
+        limpar();
+    }
+
+    public void limpar() {
         jRadioButtonPrimeiro.setSelected(false);
         jRadioButtonSegundo.setSelected(false);
         txtano.setText("");
@@ -63,10 +62,19 @@ public class ProfessorDisciplinaView extends javax.swing.JFrame {
         jCheckBoxQua.setSelected(false);
         jCheckBoxQui.setSelected(false);
         jCheckBoxSex.setSelected(false);
-        
         txtano.requestFocus();
     }
-     
+
+    private String getDiasSelecionados() {
+        StringBuilder dias = new StringBuilder();
+        if (jCheckBoxSeg.isSelected()) dias.append("S");
+        if (jCheckBoxTerca.isSelected()) dias.append("T");
+        if (jCheckBoxQua.isSelected()) dias.append("Q");
+        if (jCheckBoxQui.isSelected()) dias.append("U");
+        if (jCheckBoxSex.isSelected()) dias.append("X");
+        return dias.toString();
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -100,73 +108,78 @@ public class ProfessorDisciplinaView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowOpened(java.awt.event.WindowEvent evt) {
-                formWindowOpened(evt);
+                formWindowOpened();
             }
         });
 
         jLabel1.setText("PROFESSOR:");
-
         jLabel2.setText("DISCIPLINA:");
-
         jLabel3.setText("ANO:");
-
         jLabel4.setText("SEMESTRE:");
-
         jLabel5.setText("DIAS:");
 
         txtano.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtanoKeyTyped(evt);
+                txtanoKeyTyped();
             }
         });
 
         jRadioButtonPrimeiro.setText("Primeiro");
         jRadioButtonPrimeiro.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jRadioButtonPrimeiroMouseClicked(evt);
+                jRadioButtonPrimeiroMouseClicked();
             }
         });
 
         jRadioButtonSegundo.setText("Segundo");
         jRadioButtonSegundo.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jRadioButtonSegundoMouseClicked(evt);
+                jRadioButtonSegundoMouseClicked();
             }
         });
 
         jCheckBoxSeg.setText("Segunda");
         jCheckBoxSeg.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jCheckBoxSegMouseClicked(evt);
+                jCheckBoxSegMouseClicked();
             }
         });
 
         jCheckBoxTerca.setText("Terça");
         jCheckBoxTerca.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jCheckBoxTercaMouseClicked(evt);
+                jCheckBoxTercaMouseClicked();
             }
         });
 
         jCheckBoxQua.setText("Quarta");
         jCheckBoxQua.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jCheckBoxQuaMouseClicked(evt);
+                jCheckBoxQuaMouseClicked();
             }
         });
 
         jCheckBoxQui.setText("Quinta");
         jCheckBoxQui.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jCheckBoxQuiMouseClicked(evt);
+                jCheckBoxQuiMouseClicked();
             }
         });
 
         jCheckBoxSex.setText("Sexta");
         jCheckBoxSex.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jCheckBoxSexMouseClicked(evt);
+                jCheckBoxSexMouseClicked();
             }
         });
 
@@ -239,52 +252,28 @@ public class ProfessorDisciplinaView extends javax.swing.JFrame {
 
         btninserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/add.png"))); // NOI18N
         btninserir.setText("Incluir");
-        btninserir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btninserirActionPerformed(evt);
-            }
-        });
+        btninserir.addActionListener(evt -> btninserirActionPerformed());
 
         btnsalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/save.png"))); // NOI18N
         btnsalvar.setText("Salvar");
-        btnsalvar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnsalvarActionPerformed(evt);
-            }
-        });
+        btnsalvar.addActionListener(evt -> btnsalvarActionPerformed());
 
         btnexcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/delete.png"))); // NOI18N
         btnexcluir.setText("Excluir");
-        btnexcluir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnexcluirActionPerformed(evt);
-            }
-        });
+        btnexcluir.addActionListener(evt -> btnexcluirActionPerformed());
 
         btncancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/cancel.png"))); // NOI18N
         btncancelar.setText("Cancelar");
-        btncancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btncancelarActionPerformed(evt);
-            }
-        });
+        btncancelar.addActionListener(evt -> btncancelarActionPerformed());
 
         btnsair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/exit.png"))); // NOI18N
         btnsair.setText("Sair");
         btnsair.setToolTipText("");
-        btnsair.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnsairActionPerformed(evt);
-            }
-        });
+        btnsair.addActionListener(evt -> btnsairActionPerformed());
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/print.png"))); // NOI18N
         jButton1.setText("Imprimir");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        jButton1.addActionListener(evt -> jButton1ActionPerformed());
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -320,16 +309,13 @@ public class ProfessorDisciplinaView extends javax.swing.JFrame {
         );
 
         tabelaProfessor.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
+            new Object [][] {},
+            new String [] {}
         ));
         tabelaProfessor.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tabelaProfessorMouseClicked(evt);
+                tabelaProfessorMouseClicked();
             }
         });
         jScrollPane1.setViewportView(tabelaProfessor);
@@ -373,82 +359,66 @@ public class ProfessorDisciplinaView extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnsairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsairActionPerformed
+    private void btnsairActionPerformed() {
         ConsultaProfessoresView cv = new ConsultaProfessoresView();
         cv.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnsairActionPerformed
+    }
 
-    private void btncancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncancelarActionPerformed
+    private void btncancelarActionPerformed() {
         btninserir.setSelected(true);
         btnexcluir.setSelected(false);
         btncancelar.setSelected(false);
         btnsalvar.setSelected(false);
         alterar = false;
         limpar();
-    }//GEN-LAST:event_btncancelarActionPerformed
+    }
 
-    private void txtanoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtanoKeyTyped
-        if(alterar){
+    private void txtanoKeyTyped() {
+        if (alterar) {
             btnexcluir.setEnabled(false);
             btnsalvar.setEnabled(true);
         }
         btncancelar.setEnabled(true);
-    }//GEN-LAST:event_txtanoKeyTyped
+    }
 
-    private void jCheckBoxSegMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCheckBoxSegMouseClicked
-        if(jCheckBoxSeg.isSelected()){
+    private void jCheckBoxSegMouseClicked() {
+        if (jCheckBoxSeg.isSelected()) {
             btnexcluir.setEnabled(false);
             btnsalvar.setEnabled(true);
         }
         btncancelar.setEnabled(true);
-    }//GEN-LAST:event_jCheckBoxSegMouseClicked
+    }
 
-    private void jRadioButtonPrimeiroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButtonPrimeiroMouseClicked
-        if(jRadioButtonPrimeiro.isSelected()){
+    private void jRadioButtonPrimeiroMouseClicked() {
+        if (jRadioButtonPrimeiro.isSelected()) {
             btnexcluir.setEnabled(false);
             btnsalvar.setEnabled(true);
         }
         btncancelar.setEnabled(true);
-    }//GEN-LAST:event_jRadioButtonPrimeiroMouseClicked
+    }
 
-    private void jRadioButtonSegundoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButtonSegundoMouseClicked
-        if(jRadioButtonSegundo.isSelected()){
+    private void jRadioButtonSegundoMouseClicked() {
+        if (jRadioButtonSegundo.isSelected()) {
             btnexcluir.setEnabled(false);
             btnsalvar.setEnabled(true);
         }
         btncancelar.setEnabled(true);
-    }//GEN-LAST:event_jRadioButtonSegundoMouseClicked
+    }
 
-    private void btnexcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnexcluirActionPerformed
+    private void btnexcluirActionPerformed() {
         Disciplinas disciplina = (Disciplinas) comboDisciplinas.getSelectedItem();
-        if(pcc.delete(this.professor.getIdprofessor(), disciplina.getId())){
+        if (pcc.delete(this.professor.getIdprofessor(), disciplina.getId())) {
             JOptionPane.showMessageDialog(null, "apagado com sucesso", "", JOptionPane.INFORMATION_MESSAGE);
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "erro ao excluir", "", JOptionPane.ERROR_MESSAGE);
         }
         getDisciplinasDoProfessor();
-    }//GEN-LAST:event_btnexcluirActionPerformed
+    }
 
-    private void btnsalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsalvarActionPerformed
+    private void btnsalvarActionPerformed() {
         if (validaCampos()) {
-            String dias = "";
-            if (jCheckBoxSeg.isSelected()) {
-                dias += "S";
-            }
-            if (jCheckBoxTerca.isSelected()) {
-                dias += "T";
-            }
-            if (jCheckBoxQua.isSelected()) {
-                dias += "Q";
-            }
-            if (jCheckBoxQui.isSelected()) {
-                dias += "U";
-            }
-            if (jCheckBoxSex.isSelected()) {
-                dias += "X";
-            }
-
+            String dias = getDiasSelecionados();
             if (pcc.update(this.professor, (Disciplinas) comboDisciplinas.getSelectedItem(),
                     jRadioButtonPrimeiro.isSelected() ? 1 : 2,
                     Integer.parseInt(txtano.getText()), dias)) {
@@ -459,92 +429,51 @@ public class ProfessorDisciplinaView extends javax.swing.JFrame {
             }
             getDisciplinasDoProfessor();
         }
-    }//GEN-LAST:event_btnsalvarActionPerformed
+    }
 
-    private void btninserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btninserirActionPerformed
+    private void btninserirActionPerformed() {
         if (validaCampos()) {
             Disciplinas disc = (Disciplinas) comboDisciplinas.getSelectedItem();
-            String dias = "";
-            if (jCheckBoxSeg.isSelected()) {
-                dias += "S";
-            }
-            if (jCheckBoxTerca.isSelected()) {
-                dias += "T";
-            }
-            if (jCheckBoxQua.isSelected()) {
-                dias += "Q";
-            }
-            if (jCheckBoxQui.isSelected()) {
-                dias += "U";
-            }
-            if (jCheckBoxSex.isSelected()) {
-                dias += "X";
-            }
+            String dias = getDiasSelecionados();
 
             pcc.insert(this.professor, disc,
                     jRadioButtonPrimeiro.isSelected() ? 1 : 2,
                     Integer.parseInt(txtano.getText()), dias);
             getDisciplinasDoProfessor();
         }
-    }//GEN-LAST:event_btninserirActionPerformed
+    }
 
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+    private void formWindowOpened() {
         getListaDisciplinas();
         getDisciplinasDoProfessor();
-    }//GEN-LAST:event_formWindowOpened
+    }
 
-    private void tabelaProfessorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaProfessorMouseClicked
+    private void tabelaProfessorMouseClicked() {
         pt = (ProfessorDisciplinaTableModel) tabelaProfessor.getModel();
         ProfessorDisciplina pd = pt.getProfessorDisciplina(tabelaProfessor.getSelectedRow());
-        
+
         txtano.setText(String.valueOf(pd.getAno()));
-        if(pd.getDia().contains("Segunda")){
-            jCheckBoxSeg.setSelected(true);
-        }else{
-            jCheckBoxSeg.setSelected(false);
-        }
-        
-        if(pd.getDia().contains("Terça")){
-            jCheckBoxTerca.setSelected(true);
-        }else{
-            jCheckBoxTerca.setSelected(false);
-        }
-        
-        if(pd.getDia().contains("Quarta")){
-            jCheckBoxQua.setSelected(true);
-        }else{
-            jCheckBoxQua.setSelected(false);
-        }
-        
-        if(pd.getDia().contains("Quinta")){
-            jCheckBoxQui.setSelected(true);
-        }else{
-            jCheckBoxQui.setSelected(false);
-        }
-        
-        if(pd.getDia().contains("Sexta")){
-            jCheckBoxSex.setSelected(true);
-        }else{
-            jCheckBoxSex.setSelected(false);
-        }
-        
-  
-        
-        if(pd.getSemestre() == 1){
+        jCheckBoxSeg.setSelected(pd.getDia().contains("Segunda"));
+        jCheckBoxTerca.setSelected(pd.getDia().contains("Terça"));
+        jCheckBoxQua.setSelected(pd.getDia().contains("Quarta"));
+        jCheckBoxQui.setSelected(pd.getDia().contains("Quinta"));
+        jCheckBoxSex.setSelected(pd.getDia().contains("Sexta"));
+
+        if (pd.getSemestre() == 1) {
             jRadioButtonPrimeiro.setSelected(true);
             jRadioButtonSegundo.setSelected(false);
-        }else if(pd.getSemestre() == 2){
+        } else if (pd.getSemestre() == 2) {
             jRadioButtonSegundo.setSelected(true);
             jRadioButtonPrimeiro.setSelected(false);
         }
-             
+
         for (int i = 0; i < comboDisciplinas.getItemCount(); i++) {
             Disciplinas d = (Disciplinas) comboDisciplinas.getItemAt(i);
             if (d.getNome().equals(pd.getDisciplina().getNome())) {
                 comboDisciplinas.setSelectedIndex(i);
             }
-        }        
-        
+        }
+
         comboDisciplinas.setEnabled(false);
         btnexcluir.setEnabled(true);
         btninserir.setEnabled(false);
@@ -552,68 +481,66 @@ public class ProfessorDisciplinaView extends javax.swing.JFrame {
         btncancelar.setEnabled(true);
 
         alterar = true;
-    }//GEN-LAST:event_tabelaProfessorMouseClicked
+    }
 
-    private void jCheckBoxTercaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCheckBoxTercaMouseClicked
-        if(jCheckBoxTerca.isSelected()){
+    private void jCheckBoxTercaMouseClicked() {
+        if (jCheckBoxTerca.isSelected()) {
             btnexcluir.setEnabled(false);
             btnsalvar.setEnabled(true);
         }
         btncancelar.setEnabled(true);
-    }//GEN-LAST:event_jCheckBoxTercaMouseClicked
+    }
 
-    private void jCheckBoxQuaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCheckBoxQuaMouseClicked
-        if(jCheckBoxTerca.isSelected()){
+    private void jCheckBoxQuaMouseClicked() {
+        if (jCheckBoxQua.isSelected()) {
             btnexcluir.setEnabled(false);
             btnsalvar.setEnabled(true);
         }
         btncancelar.setEnabled(true);
-    }//GEN-LAST:event_jCheckBoxQuaMouseClicked
+    }
 
-    private void jCheckBoxQuiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCheckBoxQuiMouseClicked
-        if(jCheckBoxTerca.isSelected()){
+    private void jCheckBoxQuiMouseClicked() {
+        if (jCheckBoxQui.isSelected()) {
             btnexcluir.setEnabled(false);
             btnsalvar.setEnabled(true);
         }
         btncancelar.setEnabled(true);
-    }//GEN-LAST:event_jCheckBoxQuiMouseClicked
+    }
 
-    private void jCheckBoxSexMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCheckBoxSexMouseClicked
-        if(jCheckBoxTerca.isSelected()){
+    private void jCheckBoxSexMouseClicked() {
+        if (jCheckBoxSex.isSelected()) {
             btnexcluir.setEnabled(false);
             btnsalvar.setEnabled(true);
         }
         btncancelar.setEnabled(true);
-    }//GEN-LAST:event_jCheckBoxSexMouseClicked
+    }
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButton1ActionPerformed() {
         Connection con = ConnectionFactory.getConnection();
         String src = "src/reports/relatorioProfessorDisciplinas.jasper";
-        
+
         JasperPrint jp = null;
-        Map m = new HashMap();
+        Map<String, Object> m = new HashMap<>();
         m.put("idprofessor", this.professor.getIdprofessor());
-        
-        try{
+
+        try {
             jp = JasperFillManager.fillReport(src, m, con);
-            
-        }catch(JRException ex){
-            System.out.println("erro ao gerar relatório de disciplinas"+ex);
+        } catch (JRException ex) {
+            LOGGER.log(Level.SEVERE, "erro ao gerar relatório de disciplinas", ex);
         }
-        
-        JasperViewer view = new JasperViewer(jp, false);
-        view.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+
+        if (jp != null) {
+            JasperViewer view = new JasperViewer(jp, false);
+            view.setVisible(true);
+        }
+    }
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -621,41 +548,23 @@ public class ProfessorDisciplinaView extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ProfessorDisciplinaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ProfessorDisciplinaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ProfessorDisciplinaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ProfessorDisciplinaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            LOGGER.log(Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ProfessorDisciplinaView().setVisible(true);
-            }
-        });
-    }
-    
-    private boolean validaCampos(){
-        if(!ValidaCampos.validaAno(txtano.getText())){
-            JOptionPane.showMessageDialog(this, "ano inválido", "", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }       
-        return true;
+        java.awt.EventQueue.invokeLater(() -> new ProfessorDisciplinaView().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton btncancelar;
     private javax.swing.JButton btnexcluir;
     private javax.swing.JButton btninserir;
     private javax.swing.JButton btnsair;
     private javax.swing.JButton btnsalvar;
-    private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JComboBox<Object> comboDisciplinas;
+    private javax.swing.JComboBox<Disciplinas> comboDisciplinas;
     private javax.swing.JButton jButton1;
     private javax.swing.JCheckBox jCheckBoxQua;
     private javax.swing.JCheckBox jCheckBoxQui;
@@ -674,6 +583,6 @@ public class ProfessorDisciplinaView extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabelaProfessor;
     private javax.swing.JTextField txtano;
-    public javax.swing.JTextField txtnome;
+    private javax.swing.JTextField txtnome;
     // End of variables declaration//GEN-END:variables
 }

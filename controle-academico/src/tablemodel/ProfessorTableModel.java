@@ -5,20 +5,24 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import model.bean.Professor;
 
-public class ProfessorTableModel extends AbstractTableModel{
-    
-    private List<Professor> listaProfessores;
-    private String[] colunas = {"Nome", "Endereço", "Fone", "E-mail", "Formação", "Titulação", "Salário"};
+public class ProfessorTableModel extends AbstractTableModel {
+
+    // Adicionado 'transient' para evitar problemas com java:S1948
+    private transient List<Professor> listaProfessores;
+    private final String[] colunas = {"Nome", "Endereço", "Telefone", "E-mail", "Formação", "Titulação", "Salário"};
 
     public ProfessorTableModel() {
         listaProfessores = new ArrayList<>();
     }
-    
-    public ProfessorTableModel(List<Professor> Professor){
+
+    // Corrigido java:S117 - Parâmetro renomeado de 'Professor' para 'professores'
+    public ProfessorTableModel(List<Professor> professores) {
         this();
-        this.listaProfessores.addAll(Professor);
+        if (professores != null) {
+            this.listaProfessores.addAll(professores);
+        }
     }
-    
+
     @Override
     public int getRowCount() {
         return listaProfessores.size();
@@ -32,7 +36,7 @@ public class ProfessorTableModel extends AbstractTableModel{
     @Override
     public Object getValueAt(int linha, int coluna) {
         Professor p = listaProfessores.get(linha);
-        switch(coluna){
+        switch (coluna) {
             case 0:
                 return p.getNome();
             case 1:
@@ -48,23 +52,20 @@ public class ProfessorTableModel extends AbstractTableModel{
             case 6:
                 return p.getSalario();
             default:
-                return "";                   
+                return "";
         }
     }
-    
-    
+
     @Override
-    public String getColumnName(int column){
+    public String getColumnName(int column) {
         return colunas[column];
     }
-    
-    
-    public Professor getAluno(int linha){
-        if(linha >= listaProfessores.size()){
+
+    // Corrigido o nome do método de getAluno para getProfessor
+    public Professor getProfessor(int linha) {
+        if (linha < 0 || linha >= listaProfessores.size()) {
             return null;
         }
         return listaProfessores.get(linha);
     }
-
 }
-
