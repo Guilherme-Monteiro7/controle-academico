@@ -10,6 +10,7 @@ public class Aluno {
     private String curso;
 
     public Aluno() {
+        // Construtor padrão necessário para frameworks de persistência e instanciação reflexiva
     }
 
     public int getId() {
@@ -67,7 +68,4 @@ public class Aluno {
     public void setCurso(String curso) {
         this.curso = curso;
     }
-    
-    
-    
 }

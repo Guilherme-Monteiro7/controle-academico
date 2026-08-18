@@ -1,226 +1,215 @@
 package model.dao;
 
-import conexao.ConnectionFactory;
+import connection.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import model.bean.Aluno;
 
 public class AlunoDAO {
+    
+    // Constantes para evitar duplicação de literais de colunas e mensagens (Regras do SonarQube)
+    private static final String COL_ID_ALUNO = "idaluno";
+    private static final String COL_ENDERECO = "endereco";
+    private static final String COL_EMAIL = "email";
+    private static final String COL_MATRICULA = "matrícula";
+    private static final String COL_CURSO = "curso";
+    private static final String MSG_ERRO_LEITURA = "erro ao ler os alunos";
+    
     Connection con = ConnectionFactory.getConnection();
         
-        public boolean insert(Aluno a){
-            PreparedStatement stat = null;
+    public boolean insert(Aluno a) {
+        PreparedStatement stmt = null;
+        
+        try {
+            stmt = con.prepareStatement("INSERT INTO aluno (nome, endereco, fone, email, matrícula, curso) VALUES (?, ?, ?, ?, ?, ?)");
+            stmt.setString(1, a.getNome());
+            stmt.setString(2, a.getEndereco());
+            stmt.setString(3, a.getTelefone());
+            stmt.setString(4, a.getEmail());
+            stmt.setString(5, a.getMatricula());
+            stmt.setString(6, a.getCurso());
             
-            try{
-                stat = con.prepareStatement("INSERT INTO aluno (nome,endereco,fone,email,matricula,curso) VALUES (?,?,?,?,?,?)");
-                stat.setString(1, a.getNome());
-                stat.setString(2, a.getEndereco());
-                stat.setString(3, a.getTelefone());
-                stat.setString(4, a.getEmail());
-                stat.setString(5, a.getMatricula());
-                stat.setString(6, a.getCurso());
-                
-                stat.executeUpdate();
-                
-                return true;
-                
-            }catch(SQLException e){
-                JOptionPane.showMessageDialog(null, "erro ao inserir aluno", "", JOptionPane.ERROR_MESSAGE);
-                return false;
-            }finally{
-                ConnectionFactory.closeConnection(con, stat);
-            }
+            stmt.executeUpdate();
+            return true;
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "erro ao inserir aluno", "", JOptionPane.ERROR_MESSAGE);
+            return false;
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt);
         }
+    }
     
+    public List<Aluno> read() {
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Aluno> vetorAlunos = new java.util.ArrayList<>();
         
-        
-        public ArrayList<Aluno> read(){
-            PreparedStatement stat = null;
-            ResultSet rs = null;
+        try {
+            stmt = con.prepareStatement("SELECT idaluno, nome, endereco, fone, email, matrícula, curso FROM aluno");
+            rs = stmt.executeQuery();
             
-            ArrayList <Aluno> vetorAlunos = new ArrayList<>();
-            
-            try{
-                stat = con.prepareStatement("SELECT * FROM aluno");
-                rs = stat.executeQuery();
+            while (rs.next()) {
+                Aluno a = new Aluno();
+                a.setId(rs.getInt(COL_ID_ALUNO));
+                a.setNome(rs.getString("nome"));
+                a.setEndereco(rs.getString(COL_ENDERECO));
+                a.setTelefone(rs.getString("fone"));
+                a.setEmail(rs.getString(COL_EMAIL));
+                a.setMatricula(rs.getString(COL_MATRICULA));
+                a.setCurso(rs.getString(COL_CURSO));
                 
-                while(rs.next()){
-                    Aluno a = new Aluno();
-                    a.setId(rs.getInt("idaluno"));
-                    a.setNome(rs.getString("nome"));
-                    a.setEndereco(rs.getString("endereco"));
-                    a.setTelefone(rs.getString("fone"));
-                    a.setEmail(rs.getString("email"));
-                    a.setMatricula(rs.getString("matricula"));
-                    a.setCurso(rs.getString("curso"));
-                    
-                    vetorAlunos.add(a);
-                }
-                
-            }catch(SQLException e){
-                JOptionPane.showMessageDialog(null, "erro ao inserir aluno", "", JOptionPane.ERROR_MESSAGE);
-            }finally{
-                ConnectionFactory.closeConnection(con, stat, rs);
+                vetorAlunos.add(a);
             }
             
-            return vetorAlunos;
-            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, MSG_ERRO_LEITURA, "", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs);
         }
+        
+        return vetorAlunos;
+    }
     
+    public boolean update(Aluno a) {
+        PreparedStatement stmt = null;
         
-        
-        public boolean update(Aluno a){
-            PreparedStatement stat = null;
+        try {
+            stmt = con.prepareStatement("UPDATE aluno SET nome = ?, endereco = ?, fone = ?, email = ?, matrícula = ?, curso = ? WHERE idaluno = ?");
+            stmt.setString(1, a.getNome());
+            stmt.setString(2, a.getEndereco());
+            stmt.setString(3, a.getTelefone());
+            stmt.setString(4, a.getEmail());
+            stmt.setString(5, a.getMatricula());
+            stmt.setString(6, a.getCurso());
+            stmt.setLong(7, a.getId());
             
-            try{
-                stat = con.prepareStatement("UPDATE aluno SET nome=?,endereco=?,fone=?,email=?,matricula=?,curso=? WHERE idaluno = ?");
-                stat.setString(1, a.getNome());
-                stat.setString(2, a.getEndereco());
-                stat.setString(3, a.getTelefone());
-                stat.setString(4, a.getEmail());
-                stat.setString(5, a.getMatricula());
-                stat.setString(6, a.getCurso());
-                stat.setLong(7, a.getId());
-                
-                stat.executeUpdate();
-                
-                return true;
-                
-            }catch(SQLException e){
-                JOptionPane.showMessageDialog(null, "erro ao atualizar aluno", "", JOptionPane.ERROR_MESSAGE);
-                return false;
-            }finally{
-                ConnectionFactory.closeConnection(con, stat);
-            }
+            stmt.executeUpdate();
+            return true;
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "erro ao atualizar aluno", "", JOptionPane.ERROR_MESSAGE);
+            return false;
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt);
         }
+    }
     
+    public boolean delete(Aluno a) {
+        PreparedStatement stmt = null;
         
-        
-        
-        public boolean delete(Aluno a){
-            PreparedStatement stat = null;
+        try {
+            stmt = con.prepareStatement("DELETE FROM aluno WHERE idaluno = ?");
+            stmt.setLong(1, a.getId());
             
-            try{
-                stat = con.prepareStatement("DELETE FROM aluno WHERE idaluno = ?");
-                stat.setLong(1, a.getId());
-                
-                stat.executeUpdate();
-                
-                return true;
-                
-            }catch(SQLException e){
-                JOptionPane.showMessageDialog(null, "erro ao excluir o aluno", "", JOptionPane.ERROR_MESSAGE);
-                return false;
-            }finally{
-                ConnectionFactory.closeConnection(con, stat);
-            }
+            stmt.executeUpdate();
+            return true;
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "erro ao excluir o aluno", "", JOptionPane.ERROR_MESSAGE);
+            return false;
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt);
         }
+    }
+    
+    public List<Aluno> getAlunosNome(String n) {
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Aluno> vetor = new java.util.ArrayList<>();
         
-        
-        
-        public ArrayList<Aluno> getAlunosNome(String n){
-            PreparedStatement stat = null;
-            ResultSet rs = null;
+        try {
+            stmt = con.prepareStatement("SELECT idaluno, nome, endereco, fone, email, matrícula, curso FROM aluno WHERE nome LIKE ? ORDER BY idaluno");
+            stmt.setString(1, "%" + n + "%");
+            rs = stmt.executeQuery();
             
-            ArrayList<Aluno> vetor = new ArrayList<>();
-            try{
-                stat = con.prepareStatement("SELECT * FROM aluno WHERE nome LIKE ? ORDER BY idaluno");
-                stat.setString(1, "%" +n+ "%");
-                rs=stat.executeQuery();
+            while (rs.next()) {
+                Aluno a = new Aluno();
+                a.setId(rs.getInt(COL_ID_ALUNO));
+                a.setNome(rs.getString("nome"));
+                a.setEndereco(rs.getString(COL_ENDERECO));
+                a.setTelefone(rs.getString("fone"));
+                a.setEmail(rs.getString(COL_EMAIL));
+                a.setMatricula(rs.getString(COL_MATRICULA));
+                a.setCurso(rs.getString(COL_CURSO));
                 
-                while(rs.next()){
-                    Aluno a = new Aluno();
-                  //  a.setId(rs.getLong("idaluno"));
-                    a.setNome(rs.getString("nome"));
-                    a.setEndereco(rs.getString("endereco"));
-                    a.setTelefone(rs.getString("fone"));
-                    a.setEmail(rs.getString("email"));
-                    a.setMatricula(rs.getString("matricula"));
-                    a.setCurso(rs.getString("curso"));
-                    
-                    vetor.add(a);
-                }
-                
-            }catch(SQLException ex){
-                JOptionPane.showMessageDialog(null, "erro ao ler os alunos", "", JOptionPane.ERROR_MESSAGE);
-            }finally{
-                ConnectionFactory.closeConnection(con, stat, rs);
+                vetor.add(a);
             }
             
-            return vetor;
-            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, MSG_ERRO_LEITURA, "", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs);
         }
         
+        return vetor;
+    }
+    
+    public List<Aluno> getAlunosMatr(String matr) {
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Aluno> vetor = new java.util.ArrayList<>();
         
-        
-        public ArrayList<Aluno> getAlunosMatr(String matr){
-             PreparedStatement stat = null;
-            ResultSet rs = null;
+        try {
+            stmt = con.prepareStatement("SELECT idaluno, nome, endereco, fone, email, matrícula, curso FROM aluno WHERE matrícula = ? ORDER BY idaluno");
+            stmt.setString(1, matr);
+            rs = stmt.executeQuery();
             
-            ArrayList<Aluno> vetor = new ArrayList<>();
-            try{
-                stat = con.prepareStatement("SELECT * FROM aluno WHERE matricula = ? ORDER BY idaluno");
-                stat.setString(1, matr);
-                rs=stat.executeQuery();
+            while (rs.next()) {
+                Aluno a = new Aluno();
+                a.setId(rs.getInt(COL_ID_ALUNO));
+                a.setNome(rs.getString("nome"));
+                a.setEndereco(rs.getString(COL_ENDERECO));
+                a.setTelefone(rs.getString("fone"));
+                a.setEmail(rs.getString(COL_EMAIL));
+                a.setMatricula(rs.getString(COL_MATRICULA));
+                a.setCurso(rs.getString(COL_CURSO));
                 
-                while(rs.next()){
-                    Aluno a = new Aluno();
-                  //  a.setId(rs.getLong("idaluno"));
-                    a.setNome(rs.getString("nome"));
-                    a.setEndereco(rs.getString("endereco"));
-                    a.setTelefone(rs.getString("fone"));
-                    a.setEmail(rs.getString("email"));
-                    a.setMatricula(rs.getString("matricula"));
-                    a.setCurso(rs.getString("curso"));
-                    
-                    vetor.add(a);
-                }
-                
-            }catch(SQLException ex){
-                JOptionPane.showMessageDialog(null, "erro ao ler os alunos", "", JOptionPane.ERROR_MESSAGE);
-            }finally{
-                ConnectionFactory.closeConnection(con, stat, rs);
+                vetor.add(a);
             }
             
-            return vetor;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, MSG_ERRO_LEITURA, "", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs);
         }
         
+        return vetor;
+    }
+    
+    public List<Aluno> getAlunosCurso(String c) {
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Aluno> vetor = new java.util.ArrayList<>();
         
-        
-        public ArrayList<Aluno> getAlunosCurso(String c){
-             PreparedStatement stat = null;
-            ResultSet rs = null;
+        try {
+            stmt = con.prepareStatement("SELECT idaluno, nome, endereco, fone, email, matrícula, curso FROM aluno WHERE curso = ? ORDER BY idaluno");
+            stmt.setString(1, c);
+            rs = stmt.executeQuery();
             
-            ArrayList<Aluno> vetor = new ArrayList<>();
-            try{
-                stat = con.prepareStatement("SELECT * FROM aluno WHERE curso = ? ORDER BY idaluno");
-                stat.setString(1, c);
-                rs=stat.executeQuery();
+            while (rs.next()) {
+                Aluno a = new Aluno();
+                a.setId(rs.getInt(COL_ID_ALUNO));
+                a.setNome(rs.getString("nome"));
+                a.setEndereco(rs.getString(COL_ENDERECO));
+                a.setTelefone(rs.getString("fone"));
+                a.setEmail(rs.getString(COL_EMAIL));
+                a.setMatricula(rs.getString(COL_MATRICULA));
+                a.setCurso(rs.getString(COL_CURSO));
                 
-                while(rs.next()){
-                    Aluno a = new Aluno();
-                  //  a.setId(rs.getLong("idaluno"));
-                    a.setNome(rs.getString("nome"));
-                    a.setEndereco(rs.getString("endereco"));
-                    a.setTelefone(rs.getString("fone"));
-                    a.setEmail(rs.getString("email"));
-                    a.setMatricula(rs.getString("matricula"));
-                    a.setCurso(rs.getString("curso"));
-                    
-                    vetor.add(a);
-                }
-                
-            }catch(SQLException ex){
-                JOptionPane.showMessageDialog(null, "erro ao ler os alunos", "", JOptionPane.ERROR_MESSAGE);
-            }finally{
-                ConnectionFactory.closeConnection(con, stat, rs);
+                vetor.add(a);
             }
             
-            return vetor;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, MSG_ERRO_LEITURA, "", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs);
         }
         
+        return vetor;
+    }
 }
