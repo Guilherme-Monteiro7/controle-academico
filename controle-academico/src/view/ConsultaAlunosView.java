@@ -3,6 +3,9 @@ package view;
 import conexao.ConnectionFactory;
 import controller.AlunoController;
 import java.sql.Connection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 import model.bean.Aluno;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -12,22 +15,17 @@ import tablemodel.AlunoTableModel;
 
 public class ConsultaAlunosView extends javax.swing.JFrame {
 
-    AlunoTableModel tableModel;
-    AlunoController ac;
-    
-    
+    private AlunoTableModel modeloTabela;
+    private final AlunoController ac;
+
     public ConsultaAlunosView() {
         initComponents();
-        
+
         ac = new AlunoController();
-        
-        tableModel = new AlunoTableModel(ac.read());
-        tabelaAlunos.setModel(tableModel);
+        modeloTabela = new AlunoTableModel(ac.ler());
+        tabelaAlunos.setModel(modeloTabela);
     }
 
-    
-    
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -46,54 +44,41 @@ public class ConsultaAlunosView extends javax.swing.JFrame {
         setTitle("Consultar Alunos");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosed(java.awt.event.WindowEvent evt) {
-                formWindowClosed(evt);
+                formWindowClosed();
             }
         });
 
         btnAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/insert.png"))); // NOI18N
         btnAdicionar.setText("Adicionar");
-        btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAdicionarActionPerformed(evt);
-            }
-        });
+        btnAdicionar.addActionListener(e -> btnAdicionarActionPerformed());
 
         btnImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/print.png"))); // NOI18N
         btnImprimir.setText("Imprimir listagem");
-        btnImprimir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnImprimirActionPerformed(evt);
-            }
-        });
+        btnImprimir.addActionListener(e -> btnImprimirActionPerformed());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Selecione o campo para busca:");
 
         ComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nenhum", "Nome", "Matrícula", "Curso" }));
-        ComboBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ComboBoxActionPerformed(evt);
-            }
-        });
+        ComboBox.addActionListener(e -> comboBoxActionPerformed());
 
         txtBusca.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtBuscaKeyTyped(evt);
             }
         });
 
-        tabelaAlunos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
+        tabelaAlunos.setModel(new DefaultTableModel(
+            new Object [][] {},
+            new String [] {}
         ));
         tabelaAlunos.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tabelaAlunosMouseClicked(evt);
+                tabelaAlunosMouseClicked();
             }
         });
         jScrollPane1.setViewportView(tabelaAlunos);
@@ -115,13 +100,9 @@ public class ConsultaAlunosView extends javax.swing.JFrame {
                 .addGap(22, 22, 22))
         );
 
-        btnsair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/exit.png"))); // NOI18N
+        btnsair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/sair.png"))); // NOI18N
         btnsair.setText("Voltar");
-        btnsair.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnsairActionPerformed(evt);
-            }
-        });
+        btnsair.addActionListener(e -> btnsairActionPerformed());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -171,86 +152,77 @@ public class ConsultaAlunosView extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
+    private void btnAdicionarActionPerformed() {
         CadastroAlunosView cv = new CadastroAlunosView(null);
         cv.setVisible(true);
-        //this.dispose();
-    }//GEN-LAST:event_btnAdicionarActionPerformed
+    }
 
-    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        /*ViewPrincipal p = new ViewPrincipal();;;
-        p.setVisible(true);
-        this.dispose();*/
-    }//GEN-LAST:event_formWindowClosed
+    private void formWindowClosed() {
+        // Método limpo após remoção do código comentado
+    }
 
-    private void tabelaAlunosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaAlunosMouseClicked
-        tableModel = (AlunoTableModel) tabelaAlunos.getModel();
-        Aluno a = tableModel.getAluno(tabelaAlunos.getSelectedRow());
-        CadastroAlunosView ca = new CadastroAlunosView(a);
+    private void tabelaAlunosMouseClicked() {
+        modeloTabela = (AlunoTableModel) tabelaAlunos.getModel();
+        Aluno um = modeloTabela.getAluno(tabelaAlunos.getSelectedRow());
+        CadastroAlunosView ca = new CadastroAlunosView(um);
         ca.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_tabelaAlunosMouseClicked
+    }
 
-    private void ComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxActionPerformed
+    private void comboBoxActionPerformed() {
         txtBusca.setText("");
-        if(ComboBox.getSelectedIndex()==0){
-            tableModel = new AlunoTableModel(ac.read());
-            tabelaAlunos.setModel(tableModel);
+        if (ComboBox.getSelectedIndex() == 0) {
+            modeloTabela = new AlunoTableModel(ac.ler());
+            tabelaAlunos.setModel(modeloTabela);
         }
         txtBusca.requestFocus();
-    }//GEN-LAST:event_ComboBoxActionPerformed
+    }
 
-    private void txtBuscaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscaKeyTyped
+    private void txtBuscaKeyTyped(java.awt.event.KeyEvent evt) {
         String chave = txtBusca.getText();
-        if(evt.getKeyChar() != '\b'){
+        if (evt.getKeyChar() != '\b') {
             chave = chave + evt.getKeyChar();
         }
-        switch(ComboBox.getSelectedIndex()){
+        switch (ComboBox.getSelectedIndex()) {
             case 1:
-                tableModel = new AlunoTableModel(ac.getAlunosNome(chave));
+                modeloTabela = new AlunoTableModel(ac.getAlunosNome(chave));
                 break;
             case 2:
-                tableModel = new AlunoTableModel(ac.getAlunosMatr(chave));
+                modeloTabela = new AlunoTableModel(ac.getAlunosMatr(chave));
                 break;
             case 3:
-                tableModel = new AlunoTableModel(ac.getAlunosCurso(chave));
+                modeloTabela = new AlunoTableModel(ac.getAlunosCurso(chave));
+                break;
+            default:
                 break;
         }
-        tabelaAlunos.setModel(tableModel);
-    }//GEN-LAST:event_txtBuscaKeyTyped
+        tabelaAlunos.setModel(modeloTabela);
+    }
 
-    private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
-        Connection con = ConnectionFactory.getConnection();
+    private void btnImprimirActionPerformed() {
+        Connection com = ConnectionFactory.getConnection();
         String src = "src/reports/listagemAlunos.jasper";
-        
         JasperPrint jp = null;
-        
-        try{
-            jp = JasperFillManager.fillReport(src, null, con);
-            
-        }catch(JRException ex){
-            System.out.println("erro ao gerar relatório de alunos"+ex);
-        }
-        
-        JasperViewer view = new JasperViewer(jp, false);
-        view.setVisible(true);
-    }//GEN-LAST:event_btnImprimirActionPerformed
 
-    private void btnsairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsairActionPerformed
+        try {
+            jp = JasperFillManager.fillReport(src, null, com);
+        } catch (JRException ex) {
+            Logger.getLogger(ConsultaAlunosView.class.getName()).log(Level.SEVERE, "Erro ao gerar relatório de alunos", ex);
+        }
+
+        if (jp != null) {
+            JasperViewer visualizar = new JasperViewer(jp, false);
+            visualizar.setVisible(true);
+        }
+    }
+
+    private void btnsairActionPerformed() {
         ViewPrincipal v = new ViewPrincipal();
         v.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnsairActionPerformed
+    }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+    public static void main(String[] args) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -258,23 +230,11 @@ public class ConsultaAlunosView extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ConsultaAlunosView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ConsultaAlunosView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ConsultaAlunosView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ConsultaAlunosView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(ConsultaAlunosView.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ConsultaAlunosView().setVisible(true);
-            }
-        });
+        java.awt.EventQueue.invokeLater(() -> new ConsultaAlunosView().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

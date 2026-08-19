@@ -3,6 +3,7 @@ package view;
 import conexao.ConnectionFactory;
 import controller.AlunoController;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
@@ -14,27 +15,25 @@ import net.sf.jasperreports.view.JasperViewer;
 import regex.ValidaCampos;
 
 public class CadastroAlunosView extends javax.swing.JFrame {
-    
+
     AlunoController ac = new AlunoController();
     private Aluno aluno;
     private int idAluno = 0;
     private boolean alterar = false;
-    
+
     public CadastroAlunosView(Aluno aluno) {
         initComponents();
-        
-        if(aluno!=null){
-            preencheCampos(aluno);
+
+        if (aluno != null) {
             this.aluno = aluno;
+            preencheCampos(aluno);
             btnimprimir.setEnabled(true);
-        }
-        else{
+        } else {
             txtnome.requestFocus();
         }
     }
-    
-    
-    public void limpar(){
+
+    public void limpar() {
         txtnome.setText("");
         txtendereco.setText("");
         txtfone.setText("");
@@ -43,8 +42,7 @@ public class CadastroAlunosView extends javax.swing.JFrame {
         txtmatricula.setText("");
     }
 
-    
-    public void preencheCampos(Aluno a){
+    public void preencheCampos(Aluno a) {
         this.idAluno = a.getId();
         txtnome.setText(a.getNome());
         txtendereco.setText(a.getEndereco());
@@ -52,24 +50,23 @@ public class CadastroAlunosView extends javax.swing.JFrame {
         txtemail.setText(a.getEmail());
         txtcurso.setText(a.getCurso());
         txtmatricula.setText(a.getMatricula());
-        
+
         btnexcluir.setEnabled(true);
         btnincluir.setEnabled(false);
         btnsalvar.setEnabled(false);
-        btnincluir.setEnabled(false);
         btncancelar.setEnabled(true);
         btndisciplinas.setEnabled(true);
         btnimprimir.setEnabled(true);
-        
+
         this.alterar = true;
     }
-    
-    public void getListaAlunos(){
+
+    public void getListaAlunos() {
         ConsultaAlunosView cv = new ConsultaAlunosView();
         cv.setVisible(true);
         this.dispose();
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -231,7 +228,7 @@ public class CadastroAlunosView extends javax.swing.JFrame {
         try {
             txtfone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
         } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
+            java.util.logging.Logger.getLogger(CadastroAlunosView.class.getName()).log(java.util.logging.Level.SEVERE, "Erro ao aplicar máscara no telefone", ex);
         }
         txtfone.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -326,19 +323,19 @@ public class CadastroAlunosView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnincluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnincluirActionPerformed
-        if(validaCamposAlunos()){
-            if(!txtnome.getText().isEmpty()&&!txtmatricula.getText().isEmpty()&&!txtcurso.getText().isEmpty()){
-                if(ac.insert(txtnome.getText(), txtendereco.getText(), txtfone.getText(), txtemail.getText(),
-                        txtmatricula.getText(), txtcurso.getText())){
+        if (validaCamposAlunos()) {
+            if (!txtnome.getText().isEmpty() && !txtmatricula.getText().isEmpty() && !txtcurso.getText().isEmpty()) {
+                if (ac.insert(txtnome.getText(), txtendereco.getText(), txtfone.getText(), txtemail.getText(),
+                        txtmatricula.getText(), txtcurso.getText())) {
                     limpar();
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, "não foi possível salvar o aluno", "", JOptionPane.WARNING_MESSAGE);
                 }
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "nome, curso e matrícula são obrigatórios", "", JOptionPane.WARNING_MESSAGE);
             }
             getListaAlunos();
-        }     
+        }    
     }//GEN-LAST:event_btnincluirActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
@@ -348,7 +345,7 @@ public class CadastroAlunosView extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void btncancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncancelarActionPerformed
-        btnincluir.setEnabled(false);
+        btnincluir.setEnabled(true);
         btnexcluir.setEnabled(false);
         btncancelar.setEnabled(false);
         btnsalvar.setEnabled(false);
@@ -361,15 +358,15 @@ public class CadastroAlunosView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnsairActionPerformed
 
     private void btnsalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsalvarActionPerformed
-        if(validaCamposAlunos()){
-            if(!txtnome.getText().isEmpty()&&!txtmatricula.getText().isEmpty()&&!txtcurso.getText().isEmpty()){
-                if(ac.update(idAluno, txtnome.getText(), txtendereco.getText(), txtfone.getText(), txtemail.getText(),
-                        txtmatricula.getText(), txtcurso.getText())){
+        if (validaCamposAlunos()) {
+            if (!txtnome.getText().isEmpty() && !txtmatricula.getText().isEmpty() && !txtcurso.getText().isEmpty()) {
+                if (ac.update(idAluno, txtnome.getText(), txtendereco.getText(), txtfone.getText(), txtemail.getText(),
+                        txtmatricula.getText(), txtcurso.getText())) {
                     limpar();
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, "não foi possível salvar o aluno", "", JOptionPane.WARNING_MESSAGE);
                 }
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "nome, curso e matrícula são obrigatórios", "", JOptionPane.WARNING_MESSAGE);
             }
             getListaAlunos();
@@ -377,7 +374,7 @@ public class CadastroAlunosView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnsalvarActionPerformed
 
     private void txtnomeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtnomeKeyTyped
-        if(alterar){
+        if (alterar) {
             btnsalvar.setEnabled(true);
             btnexcluir.setEnabled(false);
         }
@@ -385,24 +382,24 @@ public class CadastroAlunosView extends javax.swing.JFrame {
     }//GEN-LAST:event_txtnomeKeyTyped
 
     private void btnexcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnexcluirActionPerformed
-       if(ac.delete(idAluno)){
-           JOptionPane.showMessageDialog(this, "aluno excluido com sucesso", "", JOptionPane.INFORMATION_MESSAGE);
-       }else{
-           JOptionPane.showMessageDialog(null, "não foi possível excluir", "", JOptionPane.INFORMATION_MESSAGE);
-       }       
-       getListaAlunos();
+        if (ac.delete(idAluno)) {
+            JOptionPane.showMessageDialog(this, "aluno excluido com sucesso", "", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "não foi possível excluir", "", JOptionPane.INFORMATION_MESSAGE);
+        }      
+        getListaAlunos();
     }//GEN-LAST:event_btnexcluirActionPerformed
 
     private void btndisciplinasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndisciplinasActionPerformed
         AlunoDisciplinaView adv = new AlunoDisciplinaView(null);
         adv.aluno = this.aluno;
         adv.setVisible(true);
-        adv.txtnome.setText(txtmatricula.getText()+ " - " + txtnome.getText());
+        adv.txtnome.setText(txtmatricula.getText() + " - " + txtnome.getText());
         this.dispose();
     }//GEN-LAST:event_btndisciplinasActionPerformed
 
     private void txtenderecoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtenderecoKeyTyped
-        if(alterar){
+        if (alterar) {
             btnsalvar.setEnabled(true);
             btnexcluir.setEnabled(false);
         }
@@ -410,7 +407,7 @@ public class CadastroAlunosView extends javax.swing.JFrame {
     }//GEN-LAST:event_txtenderecoKeyTyped
 
     private void txtemailKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtemailKeyTyped
-        if(alterar){
+        if (alterar) {
             btnsalvar.setEnabled(true);
             btnexcluir.setEnabled(false);
         }
@@ -418,7 +415,7 @@ public class CadastroAlunosView extends javax.swing.JFrame {
     }//GEN-LAST:event_txtemailKeyTyped
 
     private void txtfoneKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtfoneKeyTyped
-        if(alterar){
+        if (alterar) {
             btnsalvar.setEnabled(true);
             btnexcluir.setEnabled(false);
         }
@@ -426,7 +423,7 @@ public class CadastroAlunosView extends javax.swing.JFrame {
     }//GEN-LAST:event_txtfoneKeyTyped
 
     private void txtmatriculaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtmatriculaKeyTyped
-        if(alterar){
+        if (alterar) {
             btnsalvar.setEnabled(true);
             btnexcluir.setEnabled(false);
         }
@@ -434,7 +431,7 @@ public class CadastroAlunosView extends javax.swing.JFrame {
     }//GEN-LAST:event_txtmatriculaKeyTyped
 
     private void txtcursoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcursoKeyTyped
-        if(alterar){
+        if (alterar) {
             btnsalvar.setEnabled(true);
             btnexcluir.setEnabled(false);
         }
@@ -442,33 +439,39 @@ public class CadastroAlunosView extends javax.swing.JFrame {
     }//GEN-LAST:event_txtcursoKeyTyped
 
     private void btnimprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnimprimirActionPerformed
-        Connection con = ConnectionFactory.getConnection();
-        String src = "src/reports/relatorioAluno.jasper";
-        
-        JasperPrint jp = null;
-        Map m = new HashMap();
-        m.put("idaluno", this.aluno.getId());
-        
-        try{
-            jp = JasperFillManager.fillReport(src, m, con);
-            
-        }catch(JRException ex){
-            System.out.println("erro ao gerar relatório de disciplinas"+ex);
+        if (this.aluno == null) {
+            JOptionPane.showMessageDialog(this, "Selecione um aluno antes de imprimir.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
         }
-        
-        JasperViewer view = new JasperViewer(jp, false);
-        view.setVisible(true);
+
+        new Thread(() -> {
+            Connection con = null;
+            try {
+                con = ConnectionFactory.getConnection();
+                String src = "src/reports/relatorioAluno.jasper";
+
+                Map<String, Object> m = new HashMap<>();
+                m.put("idaluno", this.aluno.getId());
+
+                JasperPrint jp = JasperFillManager.fillReport(src, m, con);
+                JasperViewer view = new JasperViewer(jp, false);
+                view.setVisible(true);
+
+            } catch (JRException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao gerar relatório de alunos: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            } finally {
+                if (con != null) {
+                    try {
+                        con.close();
+                    } catch (SQLException ex) {
+                        System.out.println("Erro ao fechar conexão: " + ex.getMessage());
+                    }
+                }
+            }
+        }).start();
     }//GEN-LAST:event_btnimprimirActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -476,51 +479,41 @@ public class CadastroAlunosView extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CadastroAlunosView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CadastroAlunosView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CadastroAlunosView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(CadastroAlunosView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CadastroAlunosView(null).setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new CadastroAlunosView(null).setVisible(true);
         });
     }
-    
-    private boolean validaCamposAlunos(){
-        if(!ValidaCampos.validaNome(txtnome.getText())){
-            JOptionPane.showMessageDialog(this, "nome inválido","",JOptionPane.ERROR_MESSAGE);
+
+    private boolean validaCamposAlunos() {
+        if (!ValidaCampos.validaNome(txtnome.getText())) {
+            JOptionPane.showMessageDialog(this, "nome inválido", "", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if(!ValidaCampos.validaEndereco(txtendereco.getText())){
-            JOptionPane.showMessageDialog(this, "endereço inválido","",JOptionPane.ERROR_MESSAGE);
+        if (!ValidaCampos.validaEndereco(txtendereco.getText())) {
+            JOptionPane.showMessageDialog(this, "endereço inválido", "", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if(!ValidaCampos.validaEmail(txtemail.getText())){
-            JOptionPane.showMessageDialog(this, "e-mail inválido","",JOptionPane.ERROR_MESSAGE);
+        if (!ValidaCampos.validaEmail(txtemail.getText())) {
+            JOptionPane.showMessageDialog(this, "e-mail inválido", "", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if(!ValidaCampos.validaFone(txtfone.getText())){
-            JOptionPane.showMessageDialog(this, "telefone inválido","",JOptionPane.ERROR_MESSAGE);
+        if (!ValidaCampos.validaFone(txtfone.getText())) {
+            JOptionPane.showMessageDialog(this, "telefone inválido", "", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if(!ValidaCampos.validaMatricula(txtmatricula.getText())){
-            JOptionPane.showMessageDialog(this, "matricula inválido","",JOptionPane.ERROR_MESSAGE);
+        if (!ValidaCampos.validaMatricula(txtmatricula.getText())) {
+            JOptionPane.showMessageDialog(this, "matricula inválido", "", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if(!ValidaCampos.validaCurso(txtcurso.getText())){
-            JOptionPane.showMessageDialog(this, "curso inválido","",JOptionPane.ERROR_MESSAGE);
+        if (!ValidaCampos.validaCurso(txtcurso.getText())) {
+            JOptionPane.showMessageDialog(this, "curso inválido", "", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        
+
         return true;
     }
 
