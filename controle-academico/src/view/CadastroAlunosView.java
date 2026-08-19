@@ -228,7 +228,7 @@ public class CadastroAlunosView extends javax.swing.JFrame {
         try {
             txtfone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
         } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
+            java.util.logging.Logger.getLogger(CadastroAlunosView.class.getName()).log(java.util.logging.Level.SEVERE, "Erro ao aplicar máscara no telefone", ex);
         }
         txtfone.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
