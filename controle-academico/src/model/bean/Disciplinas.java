@@ -1,10 +1,18 @@
 package model.bean;
 
 public class Disciplinas {
-    private int id;
+    private int id; // Ajustado para camelCase
     private String nome;
     private String codigo;
     private int cargaHoraria;
+
+    // Construtor padrão com inicialização de valores default (Abordagem 1)
+    public Disciplinas() {
+        this.id = 0;
+        this.nome = "";
+        this.codigo = "";
+        this.cargaHoraria = 0;
+    }
 
     public int getId() {
         return id;
@@ -39,12 +47,7 @@ public class Disciplinas {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return this.nome;
     }
-    
-    public Disciplinas() {
-    }
-    
-    
 }

@@ -10,6 +10,18 @@ public class Professor {
     private String titulacao;
     private double salario;
 
+    public Professor() {
+        // Inicializa os atributos com valores padrão para garantir o estado inicial do JavaBean
+        this.idprofessor = 0;
+        this.nome = "";
+        this.endereco = "";
+        this.fone = "";
+        this.email = "";
+        this.formacao = "";
+        this.titulacao = "";
+        this.salario = 0.0;
+    }
+
     public int getIdprofessor() {
         return idprofessor;
     }
@@ -73,10 +85,4 @@ public class Professor {
     public void setSalario(double salario) {
         this.salario = salario;
     }
-
-    public Professor() {
-    }
-    
-    
-    
 }

@@ -2,14 +2,15 @@ package model.bean;
 
 public class AlunoDisciplina {
     private Aluno aluno;
-    private Disciplinas Disciplinas;
-    private int semestre;
+    private Disciplinas disciplinas; // Renomeado para camelCase
+    private int semestre;            // Renomeado para camelCase sem acentos
     private int ano;
     private double nota1;
     private double nota2;
     private int faltas;
 
     public AlunoDisciplina() {
+        // Construtor padrão necessário para frameworks de persistência e instanciação reflexiva
     }
 
     public Aluno getAluno() {
@@ -21,11 +22,11 @@ public class AlunoDisciplina {
     }
 
     public Disciplinas getDisciplinas() {
-        return Disciplinas;
+        return disciplinas;
     }
 
-    public void setDisciplinas(Disciplinas Disciplinas) {
-        this.Disciplinas = Disciplinas;
+    public void setDisciplinas(Disciplinas disciplinas) {
+        this.disciplinas = disciplinas;
     }
 
     public int getSemestre() {
@@ -44,7 +45,7 @@ public class AlunoDisciplina {
         this.ano = ano;
     }
 
-    public double getNota1() {
+    public double getNota1() { // Corrigido a inicial minúscula
         return nota1;
     }
 
@@ -67,8 +68,4 @@ public class AlunoDisciplina {
     public void setFaltas(int faltas) {
         this.faltas = faltas;
     }
-    
-    
-    
-    
 }

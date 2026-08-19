@@ -1,5 +1,7 @@
 package regex;
 
+import java.util.regex.Pattern;
+
 public class ValidaCampos {
 
     public static boolean validaNome(String nome) {

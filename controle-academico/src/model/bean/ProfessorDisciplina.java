@@ -8,6 +8,12 @@ public class ProfessorDisciplina {
     private String dia;
 
     public ProfessorDisciplina() {
+        // Inicializa os atributos com valores padrão para garantir o estado inicial da entidade
+        this.professor = null;
+        this.disciplina = null;
+        this.semestre = 0;
+        this.ano = 0;
+        this.dia = "";
     }
 
     public Professor getProfessor() {
@@ -49,6 +55,4 @@ public class ProfessorDisciplina {
     public void setDia(String dia) {
         this.dia = dia;
     }
-    
-    
 }
