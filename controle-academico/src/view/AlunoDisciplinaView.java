@@ -1,11 +1,13 @@
 package view;
 
-import conexao.ConnectionFactory;
-import controller.AlunoDisciplinaContoller;
+import connection.ConnectionFactory;
+import controller.AlunoDisciplinaController;
 import controller.DisciplinasController;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import model.bean.Aluno;
@@ -15,38 +17,40 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
-import tablemodel.AlunoDisciplinaTableModel;
-import tablemodel.AlunoTableModel;
 import regex.ValidaCampos;
+import tablemodel.AlunoDisciplinaTableModel;
 
 public class AlunoDisciplinaView extends javax.swing.JFrame {
 
+    private static final Logger LOGGER = Logger.getLogger(AlunoDisciplinaView.class.getName());
+
     public Aluno aluno;
-    public AlunoDisciplinaContoller ac;
-    public AlunoDisciplinaTableModel at;
-    public boolean alterar = false;
-    
+    public AlunoDisciplinaController ac;
+    public AlunoDisciplinaTableModel em;
+    public boolean alteracao = false;
+
     public AlunoDisciplinaView(Aluno a) {
+        this.aluno = a;
         initComponents();
-        
-        ac = new AlunoDisciplinaContoller();
+        ac = new AlunoDisciplinaController();
         btnimprimir.setEnabled(true);
+        if (aluno != null) {
+            Txtnome.setText(aluno.getNome());
+        }
+        getListaDisciplinas();
+        getDisciplinasDoAluno();
     }
-    
-    public void getListaDisciplinas(){
+
+    public void getListaDisciplinas() {
         DisciplinasController dc = new DisciplinasController();
-        
-        for(Disciplinas d : dc.read()){
+        for (Disciplinas d : dc.read()) {
             comboDisciplinas.addItem(d);
         }
     }
-    
-    
-    public void getDisciplinasDoAluno(){
-        at = new AlunoDisciplinaTableModel(ac.read(aluno));
-        
-        tabelAlunoDisciplinas.setModel(at);
-        
+
+    public void getDisciplinasDoAluno() {
+        em = new AlunoDisciplinaTableModel(ac.read(aluno));
+        tabelAlunoDisciplinas.setModel(em);
         tabelAlunoDisciplinas.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         tabelAlunoDisciplinas.getColumnModel().getColumn(0).setPreferredWidth(250);
         tabelAlunoDisciplinas.getColumnModel().getColumn(1).setPreferredWidth(250);
@@ -56,51 +60,56 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
         tabelAlunoDisciplinas.getColumnModel().getColumn(5).setPreferredWidth(48);
         tabelAlunoDisciplinas.getColumnModel().getColumn(6).setPreferredWidth(50);
         tabelAlunoDisciplinas.getColumnModel().getColumn(7).setPreferredWidth(46);
-        limpar();       
+        limpar();
     }
-    
-    
-    public void limpar(){
+
+    public void limpar() {
         jRadioButtonPrimeiro.setSelected(false);
         jRadioButtonSegundo.setSelected(false);
-        txtano.setText("");
-        txtnota1.setText("");
+        Txtano.setText("");
+        TXnota1.setText("");
         txtnota2.setText("");
-        txtfaltas.setText("");
-        txtmedia.setText("");
+        estatisticas.setText("");
+        midia.setText("");
         comboDisciplinas.setSelectedIndex(0);
-        txtano.requestFocus();
+        Txtano.requestFocus();
+    }
+
+    private void registrarAlteracao() {
+        if (alteracao) {
+            btnexcluir.setEnabled(false);
+            btnsalvar.setEnabled(true);
+        }
+        btncancelar.setEnabled(true);
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
-        jDialog1 = new javax.swing.JDialog();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        javax.swing.JDialog jDialog1 = new javax.swing.JDialog();
+        javax.swing.JPanel jPanel1 = new javax.swing.JPanel();
+        javax.swing.JLabel jLabel2 = new javax.swing.JLabel();
         comboDisciplinas = new javax.swing.JComboBox<>();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        txtano = new javax.swing.JTextField();
-        txtnota1 = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        javax.swing.JLabel jLabel3 = new javax.swing.JLabel();
+        javax.swing.JLabel jLabel4 = new javax.swing.JLabel();
+        Txtano = new javax.swing.JTextField();
+        TXnota1 = new javax.swing.JTextField();
+        javax.swing.JLabel jLabel5 = new javax.swing.JLabel();
+        javax.swing.JLabel jLabel6 = new javax.swing.JLabel();
+        javax.swing.JLabel jLabel7 = new javax.swing.JLabel();
         txtnota2 = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        txtmedia = new javax.swing.JTextField();
+        javax.swing.JLabel jLabel8 = new javax.swing.JLabel();
+        midia = new javax.swing.JTextField();
         jRadioButtonPrimeiro = new javax.swing.JRadioButton();
         jRadioButtonSegundo = new javax.swing.JRadioButton();
-        jLabel9 = new javax.swing.JLabel();
-        txtfaltas = new javax.swing.JTextField();
-        jPanel2 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        javax.swing.JLabel jLabel9 = new javax.swing.JLabel();
+        estatisticas = new javax.swing.JTextField();
+        javax.swing.JPanel jPanel2 = new javax.swing.JPanel();
+        javax.swing.JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
         tabelAlunoDisciplinas = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
-        txtnome = new javax.swing.JTextField();
-        jPanel3 = new javax.swing.JPanel();
-        btninserir = new javax.swing.JButton();
+        javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
+        Txtnome = new javax.swing.JTextField();
+        javax.swing.JPanel jPanel3 = new javax.swing.JPanel();
+        btinserir = new javax.swing.JButton();
         btnsalvar = new javax.swing.JButton();
         btnexcluir = new javax.swing.JButton();
         btncancelar = new javax.swing.JButton();
@@ -121,59 +130,57 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowOpened(java.awt.event.WindowEvent evt) {
-                formWindowOpened(evt);
+                formWindowOpened();
             }
         });
 
         jLabel2.setText("DISCIPLINA:");
-
         jLabel3.setText("ANO:");
-
         jLabel4.setText("SEMESTRE:");
 
-        txtano.addKeyListener(new java.awt.event.KeyAdapter() {
+        Txtano.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtanoKeyTyped(evt);
+                registrarAlteracao();
             }
         });
 
-        txtnota1.addKeyListener(new java.awt.event.KeyAdapter() {
+        TXnota1.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtnota1KeyTyped(evt);
+                registrarAlteracao();
             }
         });
 
         jLabel5.setText("NOTAS E FALTAS:");
-
         jLabel6.setText("Nota 1:");
-
         jLabel7.setText("Nota 2:");
 
         txtnota2.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtnota2FocusLost(evt);
+                txtnota2FocusLost();
             }
         });
         txtnota2.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtnota2KeyTyped(evt);
+                registrarAlteracao();
             }
         });
 
         jLabel8.setText("Média:");
-
-        txtmedia.setEditable(false);
-
+        midia.setEditable(false);
         jRadioButtonPrimeiro.setText("Primeiro");
-
         jRadioButtonSegundo.setText("Segundo");
-
         jLabel9.setText("Faltas:");
 
-        txtfaltas.addKeyListener(new java.awt.event.KeyAdapter() {
+        estatisticas.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtfaltasKeyTyped(evt);
+                registrarAlteracao();
             }
         });
 
@@ -185,7 +192,7 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(txtano, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Txtano, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -200,11 +207,11 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtnota1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(TXnota1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtfaltas, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(estatisticas, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(36, 36, 36)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -212,7 +219,7 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
                         .addGap(52, 52, 52)
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtmedia, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(midia, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(comboDisciplinas, javax.swing.GroupLayout.PREFERRED_SIZE, 634, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(251, 251, 251)
@@ -239,34 +246,31 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtnota1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TXnota1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6)
                             .addComponent(jLabel7)
                             .addComponent(txtnota2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8)
-                            .addComponent(txtmedia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(midia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(3, 3, 3))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jRadioButtonPrimeiro)
-                        .addComponent(txtano, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(Txtano, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtfaltas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(estatisticas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel9))
                     .addComponent(jRadioButtonSegundo))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
 
         tabelAlunoDisciplinas.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
+            new Object [][] {},
+            new String [] {}
         ));
         tabelAlunoDisciplinas.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabelAlunoDisciplinasMouseClicked(evt);
             }
@@ -292,60 +296,36 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
 
         jLabel1.setText("ALUNO:");
 
-        txtnome.setEditable(false);
-        txtnome.setEnabled(false);
+        Txtnome.setEditable(false);
+        Txtnome.setEnabled(false);
 
-        btninserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/add.png"))); // NOI18N
-        btninserir.setText("Inserir");
-        btninserir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btninserirActionPerformed(evt);
-            }
-        });
+        btinserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/add.png")));
+        btinserir.setText("Inserir");
+        btinserir.addActionListener(e -> btinserirActionPerformed());
 
-        btnsalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/save.png"))); // NOI18N
+        btnsalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/save.png")));
         btnsalvar.setText("Salvar");
         btnsalvar.setEnabled(false);
-        btnsalvar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnsalvarActionPerformed(evt);
-            }
-        });
+        btnsalvar.addActionListener(e -> btnsalvarActionPerformed());
 
-        btnexcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/delete.png"))); // NOI18N
-        btnexcluir.setText("Excluir");
+        btnexcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/delete.png")));
+        btnexcluir.setText("Exclusão");
         btnexcluir.setEnabled(false);
-        btnexcluir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnexcluirActionPerformed(evt);
-            }
-        });
+        btnexcluir.addActionListener(e -> btnexcluirActionPerformed());
 
-        btncancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/cancel.png"))); // NOI18N
+        btncancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/cancel.png")));
         btncancelar.setText("Cancelar");
         btncancelar.setEnabled(false);
-        btncancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btncancelarActionPerformed(evt);
-            }
-        });
+        btncancelar.addActionListener(e -> btncancelarActionPerformed());
 
-        btnsair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/exit.png"))); // NOI18N
+        btnsair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/exit.png")));
         btnsair.setText("Sair");
-        btnsair.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnsairActionPerformed(evt);
-            }
-        });
+        btnsair.addActionListener(e -> btnsairActionPerformed());
 
-        btnimprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/print.png"))); // NOI18N
+        btnimprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/print.png")));
         btnimprimir.setText("Imprimir");
         btnimprimir.setEnabled(false);
-        btnimprimir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnimprimirActionPerformed(evt);
-            }
-        });
+        btnimprimir.addActionListener(e -> btnimprimirActionPerformed());
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -353,7 +333,7 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(36, 36, 36)
-                .addComponent(btninserir)
+                .addComponent(btinserir)
                 .addGap(30, 30, 30)
                 .addComponent(btnsalvar)
                 .addGap(35, 35, 35)
@@ -367,11 +347,11 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
                 .addGap(38, 38, 38))
         );
         jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap(34, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btninserir)
+                    .addComponent(btinserir)
                     .addComponent(btnsalvar)
                     .addComponent(btnexcluir)
                     .addComponent(btncancelar)
@@ -392,7 +372,7 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(txtnome))
+                        .addComponent(Txtnome))
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
@@ -402,7 +382,7 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtnome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Txtnome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -414,84 +394,79 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
 
         pack();
         setLocationRelativeTo(null);
-    }// </editor-fold>//GEN-END:initComponents
+    }
 
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-       getListaDisciplinas();
-       getDisciplinasDoAluno();
-    }//GEN-LAST:event_formWindowOpened
+    private void formWindowOpened() {
+        getListaDisciplinas();
+        getDisciplinasDoAluno();
+    }
 
-    private void tabelAlunoDisciplinasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelAlunoDisciplinasMouseClicked
-        if(tabelAlunoDisciplinas.getSelectedRow()>=0){
-            at = (AlunoDisciplinaTableModel) tabelAlunoDisciplinas.getModel();
-            AlunoDisciplina add = at.getAlunoDisciplina(tabelAlunoDisciplinas.getSelectedRow());
-            
-            
-            if(add.getSemestre() == 1){
+    private void tabelAlunoDisciplinasMouseClicked(java.awt.event.MouseEvent evt) {
+        if (tabelAlunoDisciplinas.getSelectedRow() >= 0) {
+            em = (AlunoDisciplinaTableModel) tabelAlunoDisciplinas.getModel();
+            AlunoDisciplina adicionar = em.getAlunoDisciplina(tabelAlunoDisciplinas.getSelectedRow());
+
+            if (adicionar.getSemestre() == 1) {
                 jRadioButtonPrimeiro.setSelected(true);
                 jRadioButtonSegundo.setSelected(false);
-            }else if(add.getSemestre() == 2){
+            } else if (adicionar.getSemestre() == 2) {
                 jRadioButtonSegundo.setSelected(true);
                 jRadioButtonPrimeiro.setSelected(false);
             }
-       
-       
-            txtano.setText(tabelAlunoDisciplinas.getValueAt(tabelAlunoDisciplinas.getSelectedRow(),2).toString());
-            txtnota1.setText(tabelAlunoDisciplinas.getValueAt(tabelAlunoDisciplinas.getSelectedRow(),4).toString());
-            txtnota2.setText(tabelAlunoDisciplinas.getValueAt(tabelAlunoDisciplinas.getSelectedRow(),5).toString());
-            txtmedia.setText(tabelAlunoDisciplinas.getValueAt(tabelAlunoDisciplinas.getSelectedRow(),6).toString());
-            txtfaltas.setText(tabelAlunoDisciplinas.getValueAt(tabelAlunoDisciplinas.getSelectedRow(),7).toString());
-            
-            String disc = tabelAlunoDisciplinas.getValueAt(tabelAlunoDisciplinas.getSelectedRow(),1).toString();           
-            
-            for(int i=0; i<comboDisciplinas.getItemCount();i++){
+
+            Txtano.setText(tabelAlunoDisciplinas.getValueAt(tabelAlunoDisciplinas.getSelectedRow(), 2).toString());
+            TXnota1.setText(tabelAlunoDisciplinas.getValueAt(tabelAlunoDisciplinas.getSelectedRow(), 4).toString());
+            txtnota2.setText(tabelAlunoDisciplinas.getValueAt(tabelAlunoDisciplinas.getSelectedRow(), 5).toString());
+            midia.setText(tabelAlunoDisciplinas.getValueAt(tabelAlunoDisciplinas.getSelectedRow(), 6).toString());
+            estatisticas.setText(tabelAlunoDisciplinas.getValueAt(tabelAlunoDisciplinas.getSelectedRow(), 7).toString());
+
+            String disco = tabelAlunoDisciplinas.getValueAt(tabelAlunoDisciplinas.getSelectedRow(), 1).toString();
+
+            for (int i = 0; i < comboDisciplinas.getItemCount(); i++) {
                 Disciplinas d = (Disciplinas) comboDisciplinas.getItemAt(i);
-                if(d.getNome().equals(disc)){
+                if (d.getNome().equals(disco)) {
                     comboDisciplinas.setSelectedIndex(i);
                 }
             }
-            
+
             comboDisciplinas.setEnabled(false);
             btnexcluir.setEnabled(true);
-            btninserir.setEnabled(false);
+            btinserir.setEnabled(false);
             btnsalvar.setEnabled(false);
             btncancelar.setEnabled(true);
-            
-            alterar = true;
-            
+            alteracao = true;
         }
-    }//GEN-LAST:event_tabelAlunoDisciplinasMouseClicked
+    }
 
-    private void btninserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btninserirActionPerformed
-        if(ValidaCampos()){
+    private void btinserirActionPerformed() {
+        if (validaCampos()) {
             Disciplinas d = (Disciplinas) comboDisciplinas.getSelectedItem();
-
-            ac.insert(this.aluno, d, jRadioButtonPrimeiro.isSelected() ? 1 : 2, Integer.parseInt(txtano.getText()),
-                    Double.parseDouble(txtnota1.getText()), Double.parseDouble(txtnota2.getText()), Integer.parseInt(txtfaltas.getText()));
+            ac.insert(this.aluno, d, jRadioButtonPrimeiro.isSelected() ? 1 : 2, Integer.parseInt(Txtano.getText()),
+                    Double.parseDouble(TXnota1.getText()), Double.parseDouble(txtnota2.getText()), Integer.parseInt(estatisticas.getText()));
             getDisciplinasDoAluno();
         }
-    }//GEN-LAST:event_btninserirActionPerformed
+    }
 
-    private void btncancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncancelarActionPerformed
-        btninserir.setSelected(true);
+    private void btncancelarActionPerformed() {
+        btinserir.setSelected(true);
         btnexcluir.setSelected(false);
         btncancelar.setSelected(false);
         btnsalvar.setSelected(false);
-        alterar = false;
+        alteracao = false;
         limpar();
-    }//GEN-LAST:event_btncancelarActionPerformed
+    }
 
-    private void btnsairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsairActionPerformed
+    private void btnsairActionPerformed() {
         ConsultaAlunosView cv = new ConsultaAlunosView();
         cv.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnsairActionPerformed
+    }
 
-    private void btnsalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsalvarActionPerformed
-        if(ValidaCampos()){
+    private void btnsalvarActionPerformed() {
+        if (validaCampos()) {
             if (ac.update(this.aluno, (Disciplinas) comboDisciplinas.getSelectedItem(), jRadioButtonPrimeiro.isSelected() ? 1 : 2,
-                    Integer.parseInt(txtano.getText()), Double.parseDouble(txtnota1.getText()), Double.parseDouble(txtnota2.getText()),
-                    Integer.parseInt(txtfaltas.getText()))) {
+                    Integer.parseInt(Txtano.getText()), Double.parseDouble(TXnota1.getText()), Double.parseDouble(txtnota2.getText()),
+                    Integer.parseInt(estatisticas.getText()))) {
                 JOptionPane.showMessageDialog(null, "atualizado com sucesso", "", JOptionPane.INFORMATION_MESSAGE);
                 btnsalvar.setEnabled(false);
             } else {
@@ -499,85 +474,43 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
             }
             getDisciplinasDoAluno();
         }
-    }//GEN-LAST:event_btnsalvarActionPerformed
+    }
 
-    private void btnexcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnexcluirActionPerformed
+    private void btnexcluirActionPerformed() {
         Disciplinas disciplina = (Disciplinas) comboDisciplinas.getSelectedItem();
-        if(ac.delete(aluno, disciplina)){
+        if (ac.delete(aluno, disciplina)) {
             JOptionPane.showMessageDialog(null, "apagado com sucesso", "", JOptionPane.INFORMATION_MESSAGE);
-        }else{
-            JOptionPane.showMessageDialog(null, "erro ao excluir", "", JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "erro exclui", "", JOptionPane.ERROR_MESSAGE);
         }
         getDisciplinasDoAluno();
-    }//GEN-LAST:event_btnexcluirActionPerformed
+    }
 
-    private void txtanoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtanoKeyTyped
-        if(alterar){
-            btnexcluir.setEnabled(false);
-            btnsalvar.setEnabled(true);
+    private void txtnota2FocusLost() {
+        if (!TXnota1.getText().trim().isEmpty() && !txtnota2.getText().trim().isEmpty()) {
+            double mediaCalc = (Double.parseDouble(TXnota1.getText()) + Double.parseDouble(txtnota2.getText())) / 2;
+            midia.setText(String.valueOf(mediaCalc));
         }
-        btncancelar.setEnabled(true);
-    }//GEN-LAST:event_txtanoKeyTyped
+    }
 
-    private void txtnota1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtnota1KeyTyped
-        if(alterar){
-            btnexcluir.setEnabled(false);
-            btnsalvar.setEnabled(true);
-        }
-        btncancelar.setEnabled(true);
-    }//GEN-LAST:event_txtnota1KeyTyped
-
-    private void txtnota2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtnota2KeyTyped
-        if(alterar){
-            btnexcluir.setEnabled(false);
-            btnsalvar.setEnabled(true);
-        }
-        btncancelar.setEnabled(true);
-    }//GEN-LAST:event_txtnota2KeyTyped
-
-    private void txtfaltasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtfaltasKeyTyped
-        if(alterar){
-            btnexcluir.setEnabled(false);
-            btnsalvar.setEnabled(true);
-        }
-        btncancelar.setEnabled(true);
-    }//GEN-LAST:event_txtfaltasKeyTyped
-
-    private void txtnota2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtnota2FocusLost
-        if(!txtnota1.equals("") && !txtnota2.equals("")){
-            double media = (Double.parseDouble(txtnota1.getText())+Double.parseDouble(txtnota2.getText())) / 2;
-            txtmedia.setText(String.valueOf(media));
-        }
-    }//GEN-LAST:event_txtnota2FocusLost
-
-    private void btnimprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnimprimirActionPerformed
+    private void btnimprimirActionPerformed() {
         Connection con = ConnectionFactory.getConnection();
         String src = "src/reports/DisciplinasDoAluno.jasper";
-        
         JasperPrint jp = null;
-        Map m = new HashMap();
+        Map<String, Object> m = new HashMap<>();
         m.put("idaluno", this.aluno.getId());
-        
-        try{
-            jp = JasperFillManager.fillReport(src, m, con);
-            
-        }catch(JRException ex){
-            System.out.println("erro ao gerar relatório de disciplinas"+ex);
-        }
-        
-        JasperViewer view = new JasperViewer(jp, false);
-        view.setVisible(true);
-    }//GEN-LAST:event_btnimprimirActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+        try {
+            jp = JasperFillManager.fillReport(src, m, con);
+        } catch (JRException ex) {
+            LOGGER.log(Level.SEVERE, "erro ao gerar relatório de disciplinas", ex);
+        }
+
+        JasperViewer viewer = new JasperViewer(jp, false);
+        viewer.setVisible(true);
+    }
+
+    public static void main(String[] args) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -585,76 +518,47 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AlunoDisciplinaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AlunoDisciplinaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AlunoDisciplinaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(AlunoDisciplinaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AlunoDisciplinaView(null).setVisible(true);
-            }
-        });
+        java.awt.EventQueue.invokeLater(() -> new AlunoDisciplinaView(null).setVisible(true));
     }
-    
-    
-    private boolean ValidaCampos(){
-        if(!ValidaCampos.validaAno(txtano.getText())){
+
+    private boolean validaCampos() {
+        if (!ValidaCampos.validaAno(Txtano.getText())) {
             JOptionPane.showMessageDialog(this, "ano inválido", "", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if(!ValidaCampos.validaNota(txtnota1.getText())){
+        if (!ValidaCampos.validaNota(TXnota1.getText())) {
             JOptionPane.showMessageDialog(this, "nota inválida", "", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if(!ValidaCampos.validaNota(txtnota2.getText())){
+        if (!ValidaCampos.validaNota(txtnota2.getText())) {
             JOptionPane.showMessageDialog(this, "nota inválida", "", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if(!ValidaCampos.validaFaltas(txtfaltas.getText())){
+        if (!ValidaCampos.validaFaltas(estatisticas.getText())) {
             JOptionPane.showMessageDialog(this, "faltas inválidas", "", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btncancelar;
     private javax.swing.JButton btnexcluir;
     private javax.swing.JButton btnimprimir;
-    private javax.swing.JButton btninserir;
+    private javax.swing.JButton btinserir;
     private javax.swing.JButton btnsair;
     private javax.swing.JButton btnsalvar;
     private javax.swing.JComboBox<Object> comboDisciplinas;
-    private javax.swing.JDialog jDialog1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JRadioButton jRadioButtonPrimeiro;
     private javax.swing.JRadioButton jRadioButtonSegundo;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabelAlunoDisciplinas;
-    private javax.swing.JTextField txtano;
-    private javax.swing.JTextField txtfaltas;
-    private javax.swing.JTextField txtmedia;
-    public javax.swing.JTextField txtnome;
-    private javax.swing.JTextField txtnota1;
+    private javax.swing.JTextField Txtano;
+    private javax.swing.JTextField estatisticas;
+    private javax.swing.JTextField midia;
+    public javax.swing.JTextField Txtnome;
+    private javax.swing.JTextField TXnota1;
     private javax.swing.JTextField txtnota2;
-    // End of variables declaration//GEN-END:variables
 }
