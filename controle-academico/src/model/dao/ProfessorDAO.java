@@ -12,7 +12,6 @@ import model.bean.Professor;
 
 public class ProfessorDAO {
 
-    // Constantes para os literais duplicados (Resolvendo java:S1192)
     private static final String COL_ID = "idprofessor";
     private static final String COL_NOME = "nome";
     private static final String COL_ENDERECO = "endereco";
@@ -21,6 +20,20 @@ public class ProfessorDAO {
     private static final String COL_FORMACAO = "formacao";
     private static final String COL_TITULACAO = "titulacao";
     private static final String COL_SALARIO = "salario";
+
+    // Método auxiliar para evitar duplicação de código de mapeamento (Reduzindo blocos duplicados)
+    private Professor montarProfessor(ResultSet rs) throws SQLException {
+        Professor p = new Professor();
+        p.setIdprofessor(rs.getInt(COL_ID));
+        p.setNome(rs.getString(COL_NOME));
+        p.setEndereco(rs.getString(COL_ENDERECO));
+        p.setFone(rs.getString(COL_FONE));
+        p.setEmail(rs.getString(COL_EMAIL));
+        p.setFormacao(rs.getString(COL_FORMACAO));
+        p.setTitulacao(rs.getString(COL_TITULACAO));
+        p.setSalario(rs.getDouble(COL_SALARIO));
+        return p;
+    }
 
     public boolean insert(Professor p) {
         Connection con = ConnectionFactory.getConnection();
@@ -58,17 +71,7 @@ public class ProfessorDAO {
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                Professor p = new Professor();
-                p.setIdprofessor(rs.getInt(COL_ID));
-                p.setNome(rs.getString(COL_NOME));
-                p.setEndereco(rs.getString(COL_ENDERECO));
-                p.setFone(rs.getString(COL_FONE));
-                p.setEmail(rs.getString(COL_EMAIL));
-                p.setFormacao(rs.getString(COL_FORMACAO));
-                p.setTitulacao(rs.getString(COL_TITULACAO));
-                p.setSalario(rs.getDouble(COL_SALARIO));
-
-                vetor.add(p);
+                vetor.add(montarProfessor(rs));
             }
 
         } catch (SQLException e) {
@@ -137,17 +140,7 @@ public class ProfessorDAO {
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                Professor p = new Professor();
-                p.setIdprofessor(rs.getInt(COL_ID));
-                p.setNome(rs.getString(COL_NOME));
-                p.setEndereco(rs.getString(COL_ENDERECO));
-                p.setFone(rs.getString(COL_FONE));
-                p.setEmail(rs.getString(COL_EMAIL));
-                p.setFormacao(rs.getString(COL_FORMACAO));
-                p.setTitulacao(rs.getString(COL_TITULACAO));
-                p.setSalario(rs.getDouble(COL_SALARIO));
-
-                vetor.add(p);
+                vetor.add(montarProfessor(rs));
             }
 
         } catch (SQLException ex) {
@@ -171,17 +164,7 @@ public class ProfessorDAO {
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                Professor p = new Professor();
-                p.setIdprofessor(rs.getInt(COL_ID));
-                p.setNome(rs.getString(COL_NOME));
-                p.setEndereco(rs.getString(COL_ENDERECO));
-                p.setFone(rs.getString(COL_FONE));
-                p.setEmail(rs.getString(COL_EMAIL));
-                p.setFormacao(rs.getString(COL_FORMACAO));
-                p.setTitulacao(rs.getString(COL_TITULACAO));
-                p.setSalario(rs.getDouble(COL_SALARIO));
-
-                vetor.add(p);
+                vetor.add(montarProfessor(rs));
             }
 
         } catch (SQLException ex) {
@@ -205,17 +188,7 @@ public class ProfessorDAO {
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                Professor p = new Professor();
-                p.setIdprofessor(rs.getInt(COL_ID));
-                p.setNome(rs.getString(COL_NOME));
-                p.setEndereco(rs.getString(COL_ENDERECO));
-                p.setFone(rs.getString(COL_FONE));
-                p.setEmail(rs.getString(COL_EMAIL));
-                p.setFormacao(rs.getString(COL_FORMACAO));
-                p.setTitulacao(rs.getString(COL_TITULACAO));
-                p.setSalario(rs.getDouble(COL_SALARIO));
-
-                vetor.add(p);
+                vetor.add(montarProfessor(rs));
             }
 
         } catch (SQLException ex) {
