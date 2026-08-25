@@ -30,19 +30,19 @@ public class CadastroDisciplinasView extends javax.swing.JFrame {
             this.disco = disco;
             btnimprimir.setEnabled(true);
         } else {
-            Txtnomedisc.requestFocus();
+            txtNomeDisc.requestFocus();
         }
     }
 
     public void limparCampos() {
-        Txtnomedisc.setText("");
+        txtNomeDisc.setText("");
         txtcode.setText("");
         taxcargaoria.setText("");
     }
 
     public void preenchaCampos(Disciplinas d) {
         this.idDisc = d.getId();
-        Txtnomedisc.setText(d.getNome());
+        txtNomeDisc.setText(d.getNome());
         txtcode.setText(d.getCodigo());
         taxcargaoria.setText(String.valueOf(d.getCargaHoraria()));
 
@@ -71,18 +71,21 @@ public class CadastroDisciplinasView extends javax.swing.JFrame {
 
     @SuppressWarnings("unchecked")
     private void initComponents() {
-        jPanel1 = new javax.swing.JPanel();
+
+        // Variáveis locais (SonarQube S1450)
+        javax.swing.JPanel jPanel1 = new javax.swing.JPanel();
+        javax.swing.JButton btnsair = new javax.swing.JButton();
+        javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
+        javax.swing.JLabel jLabel2 = new javax.swing.JLabel();
+        javax.swing.JLabel jLabel3 = new javax.swing.JLabel();
+
         btnincluir = new javax.swing.JButton();
         btnsalvar = new javax.swing.JButton();
         btnexcluir = new javax.swing.JButton();
         btncancelar = new javax.swing.JButton();
-        btnsair = new javax.swing.JButton();
         btndisciplinas = new javax.swing.JButton();
         btnimprimir = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        Txtnomedisc = new javax.swing.JTextField();
+        txtNomeDisc = new javax.swing.JTextField();
         txtcode = new javax.swing.JTextField();
         taxcargaoria = new javax.swing.JTextField();
 
@@ -167,7 +170,7 @@ public class CadastroDisciplinasView extends javax.swing.JFrame {
         jLabel2.setText("CÓDIGO:");
         jLabel3.setText("CARGA HORÁRIA:");
 
-        Txtnomedisc.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtNomeDisc.addKeyListener(new java.awt.event.KeyAdapter() {
             @Override
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tratarKeyTyped();
@@ -210,7 +213,7 @@ public class CadastroDisciplinasView extends javax.swing.JFrame {
                                 .addComponent(jLabel3)
                                 .addGap(18, 18, 18)
                                 .addComponent(taxcargaoria))
-                            .addComponent(Txtnomedisc, javax.swing.GroupLayout.PREFERRED_SIZE, 803, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtNomeDisc, javax.swing.GroupLayout.PREFERRED_SIZE, 803, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(72, 72, 72)))
                 .addContainerGap())
         );
@@ -219,7 +222,7 @@ public class CadastroDisciplinasView extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(51, 51, 51)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Txtnomedisc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNomeDisc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(57, 57, 57)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -238,8 +241,8 @@ public class CadastroDisciplinasView extends javax.swing.JFrame {
 
     private void btnincluirActionPerformed() {
         if (validaCamposDisciplina()) {
-            if (!Txtnomedisc.getText().isEmpty() && !taxcargaoria.getText().isEmpty()) {
-                if (dc.inserir(Txtnomedisc.getText(), txtcode.getText(), Integer.parseInt(taxcargaoria.getText()))) {
+            if (!txtNomeDisc.getText().isEmpty() && !taxcargaoria.getText().isEmpty()) {
+                if (dc.inserir(txtNomeDisc.getText(), txtcode.getText(), Integer.parseInt(taxcargaoria.getText()))) {
                     limparCampos();
                 } else {
                     JOptionPane.showMessageDialog(null, "Não foi possível salvar a disciplina", "", JOptionPane.WARNING_MESSAGE);
@@ -253,8 +256,8 @@ public class CadastroDisciplinasView extends javax.swing.JFrame {
 
     private void btnsalvarActionPerformed() {
         if (validaCamposDisciplina()) {
-            if (!Txtnomedisc.getText().isEmpty() && !taxcargaoria.getText().isEmpty()) {
-                if (dc.atualizar(idDisc, Txtnomedisc.getText(), txtcode.getText(), Integer.parseInt(taxcargaoria.getText()))) {
+            if (!txtNomeDisc.getText().isEmpty() && !taxcargaoria.getText().isEmpty()) {
+                if (dc.atualizar(idDisc, txtNomeDisc.getText(), txtcode.getText(), Integer.parseInt(taxcargaoria.getText()))) {
                     limparCampos();
                 } else {
                     JOptionPane.showMessageDialog(null, "Não foi possível atualizar a disciplina", "", JOptionPane.WARNING_MESSAGE);
@@ -334,7 +337,7 @@ public class CadastroDisciplinasView extends javax.swing.JFrame {
     }
 
     private boolean validaCamposDisciplina() {
-        if (!ValidaCampos.validaNomeDisciplina(Txtnomedisc.getText())) {
+        if (!ValidaCampos.validaNomeDisciplina(txtNomeDisc.getText())) {
             JOptionPane.showMessageDialog(this, "Nome de disciplina inválido", "", JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -349,18 +352,14 @@ public class CadastroDisciplinasView extends javax.swing.JFrame {
         return true;
     }
 
+    // Apenas componentes utilizados em múltiplos métodos continuam aqui
     private javax.swing.JButton btncancelar;
     private javax.swing.JButton btndisciplinas;
     private javax.swing.JButton btnexcluir;
     private javax.swing.JButton btnimprimir;
     private javax.swing.JButton btnincluir;
-    private javax.swing.JButton btnsair;
     private javax.swing.JButton btnsalvar;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField taxcargaoria;
     private javax.swing.JTextField txtcode;
-    private javax.swing.JTextField Txtnomedisc;
+    private javax.swing.JTextField txtNomeDisc;
 }
