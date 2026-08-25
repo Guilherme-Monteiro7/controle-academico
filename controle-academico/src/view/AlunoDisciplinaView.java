@@ -6,6 +6,7 @@ import controller.DisciplinasController;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -35,7 +36,7 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
         ac = new AlunoDisciplinaController();
         btnimprimir.setEnabled(true);
         if (aluno != null) {
-            Txtnome.setText(aluno.getNome());
+            txtNome.setText(aluno.getNome());
         }
         getListaDisciplinas();
         getDisciplinasDoAluno();
@@ -66,13 +67,13 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
     public void limpar() {
         jRadioButtonPrimeiro.setSelected(false);
         jRadioButtonSegundo.setSelected(false);
-        Txtano.setText("");
-        TXnota1.setText("");
-        txtnota2.setText("");
+        txtAno.setText("");
+        txtNota1.setText("");
+        txtNota2.setText("");
         estatisticas.setText("");
         midia.setText("");
         comboDisciplinas.setSelectedIndex(0);
-        Txtano.requestFocus();
+        txtAno.requestFocus();
     }
 
     private void registrarAlteracao() {
@@ -91,12 +92,12 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
         comboDisciplinas = new javax.swing.JComboBox<>();
         javax.swing.JLabel jLabel3 = new javax.swing.JLabel();
         javax.swing.JLabel jLabel4 = new javax.swing.JLabel();
-        Txtano = new javax.swing.JTextField();
-        TXnota1 = new javax.swing.JTextField();
+        txtAno = new javax.swing.JTextField();
+        txtNota1 = new javax.swing.JTextField();
         javax.swing.JLabel jLabel5 = new javax.swing.JLabel();
         javax.swing.JLabel jLabel6 = new javax.swing.JLabel();
         javax.swing.JLabel jLabel7 = new javax.swing.JLabel();
-        txtnota2 = new javax.swing.JTextField();
+        txtNota2 = new javax.swing.JTextField();
         javax.swing.JLabel jLabel8 = new javax.swing.JLabel();
         midia = new javax.swing.JTextField();
         jRadioButtonPrimeiro = new javax.swing.JRadioButton();
@@ -107,13 +108,13 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
         javax.swing.JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
         tabelAlunoDisciplinas = new javax.swing.JTable();
         javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
-        Txtnome = new javax.swing.JTextField();
+        txtNome = new javax.swing.JTextField();
         javax.swing.JPanel jPanel3 = new javax.swing.JPanel();
         btinserir = new javax.swing.JButton();
         btnsalvar = new javax.swing.JButton();
         btnexcluir = new javax.swing.JButton();
         btncancelar = new javax.swing.JButton();
-        btnsair = new javax.swing.JButton();
+        javax.swing.JButton btnsair = new javax.swing.JButton();
         btnimprimir = new javax.swing.JButton();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
@@ -132,6 +133,7 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowOpened(java.awt.event.WindowEvent evt) {
+                Objects.requireNonNull(evt);
                 formWindowOpened();
             }
         });
@@ -140,14 +142,14 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
         jLabel3.setText("ANO:");
         jLabel4.setText("SEMESTRE:");
 
-        Txtano.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtAno.addKeyListener(new java.awt.event.KeyAdapter() {
             @Override
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 registrarAlteracao();
             }
         });
 
-        TXnota1.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtNota1.addKeyListener(new java.awt.event.KeyAdapter() {
             @Override
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 registrarAlteracao();
@@ -158,13 +160,13 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
         jLabel6.setText("Nota 1:");
         jLabel7.setText("Nota 2:");
 
-        txtnota2.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtNota2.addFocusListener(new java.awt.event.FocusAdapter() {
             @Override
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtnota2FocusLost();
             }
         });
-        txtnota2.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtNota2.addKeyListener(new java.awt.event.KeyAdapter() {
             @Override
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 registrarAlteracao();
@@ -192,7 +194,7 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(Txtano, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtAno, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -207,7 +209,7 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(TXnota1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtNota1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -215,7 +217,7 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
                         .addGap(36, 36, 36)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtnota2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtNota2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(52, 52, 52)
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -246,16 +248,16 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(TXnota1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNota1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6)
                             .addComponent(jLabel7)
-                            .addComponent(txtnota2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNota2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8)
                             .addComponent(midia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(3, 3, 3))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jRadioButtonPrimeiro)
-                        .addComponent(Txtano, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -296,8 +298,8 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
 
         jLabel1.setText("ALUNO:");
 
-        Txtnome.setEditable(false);
-        Txtnome.setEnabled(false);
+        txtNome.setEditable(false);
+        txtNome.setEnabled(false);
 
         btinserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/add.png")));
         btinserir.setText("Inserir");
@@ -372,7 +374,7 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(Txtnome))
+                        .addComponent(txtNome))
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
@@ -382,7 +384,7 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(Txtnome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -414,9 +416,9 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
                 jRadioButtonPrimeiro.setSelected(false);
             }
 
-            Txtano.setText(tabelAlunoDisciplinas.getValueAt(tabelAlunoDisciplinas.getSelectedRow(), 2).toString());
-            TXnota1.setText(tabelAlunoDisciplinas.getValueAt(tabelAlunoDisciplinas.getSelectedRow(), 4).toString());
-            txtnota2.setText(tabelAlunoDisciplinas.getValueAt(tabelAlunoDisciplinas.getSelectedRow(), 5).toString());
+            txtAno.setText(tabelAlunoDisciplinas.getValueAt(tabelAlunoDisciplinas.getSelectedRow(), 2).toString());
+            txtNota1.setText(tabelAlunoDisciplinas.getValueAt(tabelAlunoDisciplinas.getSelectedRow(), 4).toString());
+            txtNota2.setText(tabelAlunoDisciplinas.getValueAt(tabelAlunoDisciplinas.getSelectedRow(), 5).toString());
             midia.setText(tabelAlunoDisciplinas.getValueAt(tabelAlunoDisciplinas.getSelectedRow(), 6).toString());
             estatisticas.setText(tabelAlunoDisciplinas.getValueAt(tabelAlunoDisciplinas.getSelectedRow(), 7).toString());
 
@@ -441,8 +443,8 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
     private void btinserirActionPerformed() {
         if (validaCampos()) {
             Disciplinas d = (Disciplinas) comboDisciplinas.getSelectedItem();
-            ac.insert(this.aluno, d, jRadioButtonPrimeiro.isSelected() ? 1 : 2, Integer.parseInt(Txtano.getText()),
-                    Double.parseDouble(TXnota1.getText()), Double.parseDouble(txtnota2.getText()), Integer.parseInt(estatisticas.getText()));
+            ac.insert(this.aluno, d, jRadioButtonPrimeiro.isSelected() ? 1 : 2, Integer.parseInt(txtAno.getText()),
+                    Double.parseDouble(txtNota1.getText()), Double.parseDouble(txtNota2.getText()), Integer.parseInt(estatisticas.getText()));
             getDisciplinasDoAluno();
         }
     }
@@ -465,7 +467,7 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
     private void btnsalvarActionPerformed() {
         if (validaCampos()) {
             if (ac.update(this.aluno, (Disciplinas) comboDisciplinas.getSelectedItem(), jRadioButtonPrimeiro.isSelected() ? 1 : 2,
-                    Integer.parseInt(Txtano.getText()), Double.parseDouble(TXnota1.getText()), Double.parseDouble(txtnota2.getText()),
+                    Integer.parseInt(txtAno.getText()), Double.parseDouble(txtNota1.getText()), Double.parseDouble(txtNota2.getText()),
                     Integer.parseInt(estatisticas.getText()))) {
                 JOptionPane.showMessageDialog(null, "atualizado com sucesso", "", JOptionPane.INFORMATION_MESSAGE);
                 btnsalvar.setEnabled(false);
@@ -487,8 +489,8 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
     }
 
     private void txtnota2FocusLost() {
-        if (!TXnota1.getText().trim().isEmpty() && !txtnota2.getText().trim().isEmpty()) {
-            double mediaCalc = (Double.parseDouble(TXnota1.getText()) + Double.parseDouble(txtnota2.getText())) / 2;
+        if (!txtNota1.getText().trim().isEmpty() && !txtNota2.getText().trim().isEmpty()) {
+            double mediaCalc = (Double.parseDouble(txtNota1.getText()) + Double.parseDouble(txtNota2.getText())) / 2;
             midia.setText(String.valueOf(mediaCalc));
         }
     }
@@ -526,15 +528,15 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
     }
 
     private boolean validaCampos() {
-        if (!ValidaCampos.validaAno(Txtano.getText())) {
+        if (!ValidaCampos.validaAno(txtAno.getText())) {
             JOptionPane.showMessageDialog(this, "ano inválido", "", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if (!ValidaCampos.validaNota(TXnota1.getText())) {
+        if (!ValidaCampos.validaNota(txtNota1.getText())) {
             JOptionPane.showMessageDialog(this, "nota inválida", "", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if (!ValidaCampos.validaNota(txtnota2.getText())) {
+        if (!ValidaCampos.validaNota(txtNota2.getText())) {
             JOptionPane.showMessageDialog(this, "nota inválida", "", JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -549,16 +551,15 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
     private javax.swing.JButton btnexcluir;
     private javax.swing.JButton btnimprimir;
     private javax.swing.JButton btinserir;
-    private javax.swing.JButton btnsair;
     private javax.swing.JButton btnsalvar;
     private javax.swing.JComboBox<Object> comboDisciplinas;
     private javax.swing.JRadioButton jRadioButtonPrimeiro;
     private javax.swing.JRadioButton jRadioButtonSegundo;
     private javax.swing.JTable tabelAlunoDisciplinas;
-    private javax.swing.JTextField Txtano;
+    private javax.swing.JTextField txtAno;
     private javax.swing.JTextField estatisticas;
     private javax.swing.JTextField midia;
-    public javax.swing.JTextField Txtnome;
-    private javax.swing.JTextField TXnota1;
-    private javax.swing.JTextField txtnota2;
+    public javax.swing.JTextField txtNome;
+    private javax.swing.JTextField txtNota1;
+    private javax.swing.JTextField txtNota2;
 }

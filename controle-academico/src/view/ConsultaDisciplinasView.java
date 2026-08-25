@@ -33,15 +33,15 @@ public class ConsultaDisciplinasView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnAdicionar = new javax.swing.JButton();
-        btnImprimir = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        ComboBox = new javax.swing.JComboBox<>();
+        javax.swing.JButton btnAdicionar = new javax.swing.JButton();
+        javax.swing.JButton btnImprimir = new javax.swing.JButton();
+        javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
+        comboBox = new javax.swing.JComboBox<>();
         txtBusca = new javax.swing.JTextField();
-        jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        javax.swing.JPanel jPanel1 = new javax.swing.JPanel();
+        javax.swing.JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
         tabelaDisciplinas = new javax.swing.JTable();
-        btnsair1 = new javax.swing.JButton();
+        javax.swing.JButton btnsair1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -63,8 +63,8 @@ public class ConsultaDisciplinasView extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Selecione o campo para busca:");
 
-        ComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nenhum", "Nome", "Matrícula", "Curso" }));
-        ComboBox.addActionListener(e -> comboBoxActionPerformed());
+        comboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nenhum", "Nome", "Matrícula", "Curso" }));
+        comboBox.addActionListener(e -> comboBoxActionPerformed());
 
         tabelaDisciplinas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {},
@@ -116,7 +116,7 @@ public class ConsultaDisciplinasView extends javax.swing.JFrame {
                         .addGap(44, 44, 44)
                         .addComponent(jLabel1)
                         .addGap(28, 28, 28)
-                        .addComponent(ComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(comboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                         .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(38, 38, 38))
@@ -136,7 +136,7 @@ public class ConsultaDisciplinasView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(ComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -155,7 +155,7 @@ public class ConsultaDisciplinasView extends javax.swing.JFrame {
 
     private void comboBoxActionPerformed() {
         txtBusca.setText("");
-        if (ComboBox.getSelectedIndex() == 0) {
+        if (comboBox.getSelectedIndex() == 0) {
             discModel = new DisciplinaTableModel(dc.read());
             tabelaDisciplinas.setModel(discModel);
         }
@@ -221,13 +221,7 @@ public class ConsultaDisciplinasView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> ComboBox;
-    private javax.swing.JButton btnAdicionar;
-    private javax.swing.JButton btnImprimir;
-    private javax.swing.JButton btnsair1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JComboBox<String> comboBox;
     private javax.swing.JTable tabelaDisciplinas;
     private javax.swing.JTextField txtBusca;
     // End of variables declaration//GEN-END:variables

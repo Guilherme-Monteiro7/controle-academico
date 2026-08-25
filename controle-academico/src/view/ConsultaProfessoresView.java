@@ -3,6 +3,8 @@ package view;
 import conexao.ConnectionFactory;
 import controller.ProfessorController;
 import java.sql.Connection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.bean.Professor;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -12,12 +14,13 @@ import tablemodel.ProfessorTableModel;
 
 public class ConsultaProfessoresView extends javax.swing.JFrame {
 
-    ProfessorTableModel tableModel;
-    ProfessorController pc = new ProfessorController();
+    private ProfessorTableModel tableModel;
+    private transient ProfessorController pc;
     
     public ConsultaProfessoresView() {
         initComponents();
         
+        pc = new ProfessorController();
         tableModel = new ProfessorTableModel(pc.read());
         tabelaProfessores.setModel(tableModel);
     }
@@ -26,50 +29,40 @@ public class ConsultaProfessoresView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnadd = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        javax.swing.JButton btnadd = new javax.swing.JButton();
+        javax.swing.JButton jButton2 = new javax.swing.JButton();
+        javax.swing.JPanel jPanel1 = new javax.swing.JPanel();
+        javax.swing.JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
         tabelaProfessores = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
+        javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         txtbusca = new javax.swing.JTextField();
-        btnsair = new javax.swing.JButton();
+        javax.swing.JButton btnsair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosed(java.awt.event.WindowEvent evt) {
-                formWindowClosed(evt);
+                formWindowClosed();
             }
         });
 
         btnadd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/insert.png"))); // NOI18N
         btnadd.setText("Adicionar");
-        btnadd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnaddActionPerformed(evt);
-            }
-        });
+        btnadd.addActionListener(e -> btnaddActionPerformed());
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/print.png"))); // NOI18N
         jButton2.setText("Imprimir listagem");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
+        jButton2.addActionListener(e -> jButton2ActionPerformed());
 
         tabelaProfessores.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
+            new Object [][] {},
+            new String [] {}
         ));
         tabelaProfessores.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tabelaProfessoresMouseClicked(evt);
+                tabelaProfessoresMouseClicked();
             }
         });
         jScrollPane1.setViewportView(tabelaProfessores);
@@ -94,13 +87,10 @@ public class ConsultaProfessoresView extends javax.swing.JFrame {
         jLabel1.setText("Selecione o campo para busca:");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nenhum", "Nome", "Formação", "Titulação" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
+        jComboBox1.addActionListener(e -> jComboBox1ActionPerformed());
 
         txtbusca.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtbuscaKeyTyped(evt);
             }
@@ -108,11 +98,7 @@ public class ConsultaProfessoresView extends javax.swing.JFrame {
 
         btnsair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/exit.png"))); // NOI18N
         btnsair.setText("Voltar");
-        btnsair.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnsairActionPerformed(evt);
-            }
-        });
+        btnsair.addActionListener(e -> btnsairActionPerformed());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -161,30 +147,30 @@ public class ConsultaProfessoresView extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnaddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddActionPerformed
+    private void btnaddActionPerformed() {
         CadastroProfessoresView cp = new CadastroProfessoresView(null);
         cp.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnaddActionPerformed
+    }
 
-    private void tabelaProfessoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaProfessoresMouseClicked
+    private void tabelaProfessoresMouseClicked() {
         tableModel = (ProfessorTableModel) tabelaProfessores.getModel();
         Professor p = tableModel.getAluno(tabelaProfessores.getSelectedRow());
         CadastroProfessoresView ca = new CadastroProfessoresView(p);
         ca.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_tabelaProfessoresMouseClicked
+    }
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void jComboBox1ActionPerformed() {
         txtbusca.setText("");
-        if(jComboBox1.getSelectedIndex()==0){
+        if(jComboBox1.getSelectedIndex() == 0){
             tableModel = new ProfessorTableModel(pc.read());
             tabelaProfessores.setModel(tableModel);
         }
         txtbusca.requestFocus();
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }
 
-    private void txtbuscaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtbuscaKeyTyped
+    private void txtbuscaKeyTyped(java.awt.event.KeyEvent evt) {
         String chave = txtbusca.getText();
         if(evt.getKeyChar() != '\b'){
             chave = chave + evt.getKeyChar();
@@ -199,48 +185,47 @@ public class ConsultaProfessoresView extends javax.swing.JFrame {
             case 3:
                 tableModel = new ProfessorTableModel(pc.getProfessoresTitulacao(chave));
                 break;
+            default:
+                break;
         }
         tabelaProfessores.setModel(tableModel);
-    }//GEN-LAST:event_txtbuscaKeyTyped
+    }
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButton2ActionPerformed() {
         Connection con = ConnectionFactory.getConnection();
         String src = "src/reports/listagemProfessores.jasper";
         
         JasperPrint jp = null;
         
-        try{
+        try {
             jp = JasperFillManager.fillReport(src, null, con);
-            
-        }catch(JRException ex){
-            System.out.println("erro ao gerar relatório de disciplinas"+ex);
+        } catch (JRException ex) {
+            Logger.getLogger(ConsultaProfessoresView.class.getName())
+                  .log(Level.SEVERE, "Erro ao gerar relatório de professores", ex);
         }
         
-        JasperViewer view = new JasperViewer(jp, false);
-        view.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+        if (jp != null) {
+            JasperViewer view = new JasperViewer(jp, false);
+            view.setVisible(true);
+        }
+    }
 
-    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        /*ViewPrincipal p = new ViewPrincipal();
-        p.setVisible(true);
-        this.dispose();*/
-    }//GEN-LAST:event_formWindowClosed
+    private void formWindowClosed() {
+        // Dead commented-out code removed
+    }
 
-    private void btnsairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsairActionPerformed
+    private void btnsairActionPerformed() {
         ViewPrincipal v = new ViewPrincipal();
         v.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnsairActionPerformed
+    }
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -248,33 +233,17 @@ public class ConsultaProfessoresView extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ConsultaProfessoresView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ConsultaProfessoresView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ConsultaProfessoresView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(ConsultaProfessoresView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ConsultaProfessoresView().setVisible(true);
-            }
-        });
+        java.awt.EventQueue.invokeLater(() -> new ConsultaProfessoresView().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnadd;
-    private javax.swing.JButton btnsair;
-    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabelaProfessores;
     private javax.swing.JTextField txtbusca;
     // End of variables declaration//GEN-END:variables
