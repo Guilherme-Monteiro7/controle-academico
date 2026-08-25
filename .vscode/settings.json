@@ -1,0 +1,11 @@
+{
+    "sonarlint.connectedMode.connections.sonarqube": [
+        {
+            "serverUrl": "http://localhost:9000",
+            "token": "vscode-token"
+        }
+    ],
+    "sonarlint.connectedMode.project": {
+        "projectKey": "controle-academico"
+    }
+}
