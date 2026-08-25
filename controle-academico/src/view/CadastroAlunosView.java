@@ -6,8 +6,6 @@ import controller.DisciplinasController;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -18,12 +16,9 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
-import regex.ValidaCampos;
 import tablemodel.AlunoDisciplinaTableModel;
 
 public class AlunoDisciplinaView extends javax.swing.JFrame {
-
-    private static final Logger LOGGER = Logger.getLogger(AlunoDisciplinaView.class.getName());
 
     public Aluno aluno;
     public AlunoDisciplinaController ac;
@@ -116,7 +111,7 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
             }
         });
 
-        // Evento da Tabela sem o parâmetro 'evt' inútil
+        // Evento da Tabela
         tabelAlunoDisciplinas = new JTable();
         tabelAlunoDisciplinas.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
@@ -177,22 +172,6 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
             double mediaCalc = (Double.parseDouble(txtNota1.getText()) + Double.parseDouble(txtNota2.getText())) / 2;
             txtMedia.setText(String.valueOf(mediaCalc));
         }
-    }
-
-    private boolean validaCampos() {
-        if (!ValidaCampos.validaAno(txtAno.getText())) {
-            JOptionPane.showMessageDialog(this, "Ano inválido", "", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-        if (!ValidaCampos.validaNota(txtNota1.getText()) || !ValidaCampos.validaNota(txtNota2.getText())) {
-            JOptionPane.showMessageDialog(this, "Nota inválida", "", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-        if (!ValidaCampos.validaFaltas(txtFaltas.getText())) {
-            JOptionPane.showMessageDialog(this, "Faltas inválidas", "", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-        return true;
     }
 
     // Variáveis da classe ajustadas para camelCase
