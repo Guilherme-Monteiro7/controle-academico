@@ -69,25 +69,35 @@ public class CadastroProfessoresView extends javax.swing.JFrame {
         this.dispose();
     }
 
+    private void registrarAlteracao() {
+        if (alterar) {
+            btnexcluir.setEnabled(false);
+            btnsalvar.setEnabled(true);
+            btnincluir.setEnabled(true);
+        }
+        btncancelar.setEnabled(true);
+    }
+
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        // Declaração de variáveis locais (S1450)
+        javax.swing.JPanel jPanel1 = new javax.swing.JPanel();
+        javax.swing.JButton btnsair = new javax.swing.JButton();
+        javax.swing.JButton btnimprimir = new javax.swing.JButton();
+        javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
+        javax.swing.JLabel jLabel2 = new javax.swing.JLabel();
+        javax.swing.JLabel jLabel3 = new javax.swing.JLabel();
+        javax.swing.JLabel jLabel4 = new javax.swing.JLabel();
+        javax.swing.JLabel jLabel5 = new javax.swing.JLabel();
+        javax.swing.JLabel jLabel6 = new javax.swing.JLabel();
+        javax.swing.JLabel jLabel7 = new javax.swing.JLabel();
+
         btnincluir = new javax.swing.JButton();
         btnsalvar = new javax.swing.JButton();
         btnexcluir = new javax.swing.JButton();
         btncancelar = new javax.swing.JButton();
-        btnsair = new javax.swing.JButton();
         btndisciplinas = new javax.swing.JButton();
-        btnimprimir = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         txtnome = new javax.swing.JTextField();
         txtendereco = new javax.swing.JTextField();
         txtemail = new javax.swing.JTextField();
@@ -99,61 +109,34 @@ public class CadastroProfessoresView extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Professores");
 
-        btnincluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/add.png"))); // NOI18N
+        // Uso de Lambdas (S1604)
+        btnincluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/add.png")));
         btnincluir.setText("Incluir");
-        btnincluir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnincluirActionPerformed(evt);
-            }
-        });
+        btnincluir.addActionListener(e -> btnincluirActionPerformed());
 
-        btnsalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/save.png"))); // NOI18N
+        btnsalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/save.png")));
         btnsalvar.setText("Salvar");
-        btnsalvar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnsalvarActionPerformed(evt);
-            }
-        });
+        btnsalvar.addActionListener(e -> btnsalvarActionPerformed());
 
-        btnexcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/delete.png"))); // NOI18N
+        btnexcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/delete.png")));
         btnexcluir.setText("Excluir");
-        btnexcluir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnexcluirActionPerformed(evt);
-            }
-        });
+        btnexcluir.addActionListener(e -> btnexcluirActionPerformed());
 
-        btncancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/cancel.png"))); // NOI18N
+        btncancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/cancel.png")));
         btncancelar.setText("Cancelar");
-        btncancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btncancelarActionPerformed(evt);
-            }
-        });
+        btncancelar.addActionListener(e -> btncancelarActionPerformed());
 
-        btnsair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/exit.png"))); // NOI18N
+        btnsair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/exit.png")));
         btnsair.setText("Sair");
-        btnsair.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnsairActionPerformed(evt);
-            }
-        });
+        btnsair.addActionListener(e -> btnsairActionPerformed());
 
-        btndisciplinas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/order.png"))); // NOI18N
+        btndisciplinas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/order.png")));
         btndisciplinas.setText("Disciplinas");
-        btndisciplinas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btndisciplinasActionPerformed(evt);
-            }
-        });
+        btndisciplinas.addActionListener(e -> btndisciplinasActionPerformed());
 
-        btnimprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/print.png"))); // NOI18N
+        btnimprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/print.png")));
         btnimprimir.setText("Imprimir");
-        btnimprimir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnimprimirActionPerformed(evt);
-            }
-        });
+        btnimprimir.addActionListener(e -> btnimprimirActionPerformed());
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -192,59 +175,33 @@ public class CadastroProfessoresView extends javax.swing.JFrame {
         );
 
         jLabel1.setText("NOME:");
-
         jLabel2.setText("ENDEREÇO:");
-
         jLabel3.setText("E-MAIL:");
-
         jLabel4.setText("FONE:");
-
         jLabel5.setText("SALÁRIO:");
-
         jLabel6.setText("FORMAÇÃO:");
-
         jLabel7.setText("TITULAÇÃO:");
 
-        txtnome.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtnomeKeyTyped(evt);
+        // Centralizando a lógica repetitiva (S4144) e adicionando @Override (S1161)
+        java.awt.event.KeyAdapter alteracaoListener = new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyTyped(java.awt.event.KeyEvent e) {
+                registrarAlteracao();
             }
-        });
+        };
 
-        txtendereco.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtenderecoKeyTyped(evt);
-            }
-        });
-
-        txtemail.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtemailKeyTyped(evt);
-            }
-        });
-
-        txtsalario.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtsalarioKeyTyped(evt);
-            }
-        });
+        txtnome.addKeyListener(alteracaoListener);
+        txtendereco.addKeyListener(alteracaoListener);
+        txtemail.addKeyListener(alteracaoListener);
+        txtsalario.addKeyListener(alteracaoListener);
+        txtformacao.addKeyListener(alteracaoListener);
 
         try {
             txtfone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
         } catch (java.text.ParseException ex) {
             Logger.getLogger(CadastroProfessoresView.class.getName()).log(Level.SEVERE, "Erro ao formatar campo fone", ex);
         }
-        txtfone.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtfoneKeyTyped(evt);
-            }
-        });
-
-        txtformacao.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtformacaoKeyTyped(evt);
-            }
-        });
+        txtfone.addKeyListener(alteracaoListener);
 
         comboboxGraduacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Graduação", "Especialização", "Mestrado", "Doutorado", "Pós Doutorado" }));
 
@@ -319,23 +276,15 @@ public class CadastroProfessoresView extends javax.swing.JFrame {
 
         pack();
         setLocationRelativeTo(null);
-    }// </editor-fold>//GEN-END:initComponents
+    }
 
-    private void btnsairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsairActionPerformed
+    // Removido parâmetro inutilizado evt (S1172)
+    private void btnsairActionPerformed() {
         getListaProfessores();
-    }//GEN-LAST:event_btnsairActionPerformed
+    }
 
-    private void txtnomeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtnomeKeyTyped
-        if (alterar) {
-            btnexcluir.setEnabled(false);
-            btnsalvar.setEnabled(true);
-            btnincluir.setEnabled(true);
-        }
-        btncancelar.setEnabled(true);
-    }//GEN-LAST:event_txtnomeKeyTyped
-
-    private void btnincluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnincluirActionPerformed
-        if (ValidaCampos()) {
+    private void btnincluirActionPerformed() {
+        if (validaCampos()) { // S100: Ajuste de capitalização do método
             if (!txtnome.getText().isEmpty() && !txtformacao.getText().isEmpty()) {
                 if (pc.insert(txtnome.getText(), txtendereco.getText(), txtfone.getText(), txtemail.getText(),
                         txtformacao.getText(), comboboxGraduacao.getSelectedItem().toString(), Double.parseDouble(txtsalario.getText()))) {
@@ -348,10 +297,10 @@ public class CadastroProfessoresView extends javax.swing.JFrame {
             }
             getListaProfessores();
         }
-    }//GEN-LAST:event_btnincluirActionPerformed
+    }
 
-    private void btnsalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsalvarActionPerformed
-        if (ValidaCampos()) {
+    private void btnsalvarActionPerformed() {
+        if (validaCampos()) {
             if (!txtnome.getText().isEmpty() && !txtformacao.getText().isEmpty()) {
                 if (pc.update(idprofessor, txtnome.getText(), txtendereco.getText(), txtfone.getText(), txtemail.getText(),
                         txtformacao.getText(), comboboxGraduacao.getSelectedItem().toString(), Double.parseDouble(txtsalario.getText()))) {
@@ -364,71 +313,26 @@ public class CadastroProfessoresView extends javax.swing.JFrame {
             }
             getListaProfessores();
         }
-    }//GEN-LAST:event_btnsalvarActionPerformed
+    }
 
-    private void btnexcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnexcluirActionPerformed
+    private void btnexcluirActionPerformed() {
         if (pc.delete(idprofessor)) {
             JOptionPane.showMessageDialog(this, "professor excluido com sucesso", "", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(null, "não foi possível excluir", "", JOptionPane.INFORMATION_MESSAGE);
         }
         getListaProfessores();
-    }//GEN-LAST:event_btnexcluirActionPerformed
+    }
 
-    private void btndisciplinasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndisciplinasActionPerformed
+    private void btndisciplinasActionPerformed() {
         ProfessorDisciplinaView adv = new ProfessorDisciplinaView();
         adv.professor = this.professor;
         adv.setVisible(true);
         adv.txtnome.setText(txtnome.getText());
         this.dispose();
-    }//GEN-LAST:event_btndisciplinasActionPerformed
+    }
 
-    private void txtenderecoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtenderecoKeyTyped
-        if (alterar) {
-            btnexcluir.setEnabled(false);
-            btnsalvar.setEnabled(true);
-            btnincluir.setEnabled(true);
-        }
-        btncancelar.setEnabled(true);
-    }//GEN-LAST:event_txtenderecoKeyTyped
-
-    private void txtemailKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtemailKeyTyped
-        if (alterar) {
-            btnexcluir.setEnabled(false);
-            btnsalvar.setEnabled(true);
-            btnincluir.setEnabled(true);
-        }
-        btncancelar.setEnabled(true);
-    }//GEN-LAST:event_txtemailKeyTyped
-
-    private void txtfoneKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtfoneKeyTyped
-        if (alterar) {
-            btnexcluir.setEnabled(false);
-            btnsalvar.setEnabled(true);
-            btnincluir.setEnabled(true);
-        }
-        btncancelar.setEnabled(true);
-    }//GEN-LAST:event_txtfoneKeyTyped
-
-    private void txtformacaoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtformacaoKeyTyped
-        if (alterar) {
-            btnexcluir.setEnabled(false);
-            btnsalvar.setEnabled(true);
-            btnincluir.setEnabled(true);
-        }
-        btncancelar.setEnabled(true);
-    }//GEN-LAST:event_txtformacaoKeyTyped
-
-    private void txtsalarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtsalarioKeyTyped
-        if (alterar) {
-            btnexcluir.setEnabled(false);
-            btnsalvar.setEnabled(true);
-            btnincluir.setEnabled(true);
-        }
-        btncancelar.setEnabled(true);
-    }//GEN-LAST:event_txtsalarioKeyTyped
-
-    private void btnimprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnimprimirActionPerformed
+    private void btnimprimirActionPerformed() {
         if (this.professor == null || this.professor.getIdprofessor() == 0) {
             JOptionPane.showMessageDialog(this, "Selecione um professor antes de imprimir.", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
@@ -460,18 +364,19 @@ public class CadastroProfessoresView extends javax.swing.JFrame {
                 }
             }
         }).start();
-    }//GEN-LAST:event_btnimprimirActionPerformed
+    }
 
-    private void btncancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncancelarActionPerformed
+    private void btncancelarActionPerformed() {
         btnincluir.setEnabled(false);
         btnexcluir.setEnabled(false);
         btncancelar.setEnabled(false);
         btnsalvar.setEnabled(false);
         alterar = false;
         limpar();
-    }//GEN-LAST:event_btncancelarActionPerformed
+    }
 
-    public static void main(String args[]) {
+    // S1197: Movendo designador de array para o tipo (String[] args)
+    public static void main(String[] args) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -483,12 +388,12 @@ public class CadastroProfessoresView extends javax.swing.JFrame {
             Logger.getLogger(CadastroProfessoresView.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        java.awt.EventQueue.invokeLater(() -> {
-            new CadastroProfessoresView(null).setVisible(true);
-        });
+        // S1602: Remoção de chaves desnecessárias na expressão Lambda
+        java.awt.EventQueue.invokeLater(() -> new CadastroProfessoresView(null).setVisible(true));
     }
 
-    private boolean ValidaCampos() {
+    // S100: Renomeado de ValidaCampos para validaCampos
+    private boolean validaCampos() {
         if (!ValidaCampos.validaNome(txtnome.getText())) {
             JOptionPane.showMessageDialog(this, "nome inválido", "", JOptionPane.ERROR_MESSAGE);
             return false;
@@ -516,28 +421,17 @@ public class CadastroProfessoresView extends javax.swing.JFrame {
         return true;
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variáveis que não sofreram alteração para manter o estado da classe
     private javax.swing.JButton btncancelar;
     private javax.swing.JButton btndisciplinas;
     private javax.swing.JButton btnexcluir;
-    private javax.swing.JButton btnimprimir;
     private javax.swing.JButton btnincluir;
-    private javax.swing.JButton btnsair;
     private javax.swing.JButton btnsalvar;
     private javax.swing.JComboBox<String> comboboxGraduacao;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtemail;
     private javax.swing.JTextField txtendereco;
     private javax.swing.JFormattedTextField txtfone;
     private javax.swing.JTextField txtformacao;
     private javax.swing.JTextField txtnome;
     private javax.swing.JTextField txtsalario;
-    // End of variables declaration//GEN-END:variables
 }
