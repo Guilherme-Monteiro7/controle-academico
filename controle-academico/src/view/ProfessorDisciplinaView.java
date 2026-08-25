@@ -17,7 +17,6 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
-import regex.ValidaCampos;
 import tablemodel.ProfessorDisciplinaTableModel;
 
 public class ProfessorDisciplinaView extends javax.swing.JFrame {
@@ -79,15 +78,14 @@ public class ProfessorDisciplinaView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
-        jLabel1 = new javax.swing.JLabel();
+        javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
         txtnome = new javax.swing.JTextField();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        javax.swing.JPanel jPanel1 = new javax.swing.JPanel();
+        javax.swing.JLabel jLabel2 = new javax.swing.JLabel();
         comboDisciplinas = new javax.swing.JComboBox<>();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        javax.swing.JLabel jLabel3 = new javax.swing.JLabel();
+        javax.swing.JLabel jLabel4 = new javax.swing.JLabel();
+        javax.swing.JLabel jLabel5 = new javax.swing.JLabel();
         txtano = new javax.swing.JTextField();
         jRadioButtonPrimeiro = new javax.swing.JRadioButton();
         jRadioButtonSegundo = new javax.swing.JRadioButton();
@@ -96,13 +94,13 @@ public class ProfessorDisciplinaView extends javax.swing.JFrame {
         jCheckBoxQua = new javax.swing.JCheckBox();
         jCheckBoxQui = new javax.swing.JCheckBox();
         jCheckBoxSex = new javax.swing.JCheckBox();
-        jPanel2 = new javax.swing.JPanel();
+        javax.swing.JPanel jPanel2 = new javax.swing.JPanel();
         btninserir = new javax.swing.JButton();
         btnsalvar = new javax.swing.JButton();
         btnexcluir = new javax.swing.JButton();
         btncancelar = new javax.swing.JButton();
-        btnsair = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        javax.swing.JButton btnsair = new javax.swing.JButton();
+        javax.swing.JButton jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaProfessor = new javax.swing.JTable();
 
@@ -558,31 +556,19 @@ public class ProfessorDisciplinaView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton btncancelar;
     private javax.swing.JButton btnexcluir;
     private javax.swing.JButton btninserir;
-    private javax.swing.JButton btnsair;
     private javax.swing.JButton btnsalvar;
     private javax.swing.JComboBox<Disciplinas> comboDisciplinas;
-    private javax.swing.JButton jButton1;
     private javax.swing.JCheckBox jCheckBoxQua;
     private javax.swing.JCheckBox jCheckBoxQui;
     private javax.swing.JCheckBox jCheckBoxSeg;
     private javax.swing.JCheckBox jCheckBoxSex;
     private javax.swing.JCheckBox jCheckBoxTerca;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JRadioButton jRadioButtonPrimeiro;
     private javax.swing.JRadioButton jRadioButtonSegundo;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabelaProfessor;
     private javax.swing.JTextField txtano;
-    private javax.swing.JTextField txtnome;
     // End of variables declaration//GEN-END:variables
 }
