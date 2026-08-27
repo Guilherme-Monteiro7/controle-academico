@@ -6,7 +6,6 @@ import controller.DisciplinasController;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -38,6 +37,10 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
         if (aluno != null) {
             txtNome.setText(aluno.getNome());
         }
+        carregarDadosTela();
+    }
+
+    private void carregarDadosTela() {
         getListaDisciplinas();
         getDisciplinasDoAluno();
     }
@@ -132,9 +135,8 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                Objects.requireNonNull(evt);
-                formWindowOpened();
+            public void windowOpened(java.awt.event.WindowEvent e) {
+                carregarDadosTela();
             }
         });
 
@@ -144,14 +146,14 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
 
         txtAno.addKeyListener(new java.awt.event.KeyAdapter() {
             @Override
-            public void keyTyped(java.awt.event.KeyEvent evt) {
+            public void keyTyped(java.awt.event.KeyEvent e) {
                 registrarAlteracao();
             }
         });
 
         txtNota1.addKeyListener(new java.awt.event.KeyAdapter() {
             @Override
-            public void keyTyped(java.awt.event.KeyEvent evt) {
+            public void keyTyped(java.awt.event.KeyEvent e) {
                 registrarAlteracao();
             }
         });
@@ -162,13 +164,13 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
 
         txtNota2.addFocusListener(new java.awt.event.FocusAdapter() {
             @Override
-            public void focusLost(java.awt.event.FocusEvent evt) {
+            public void focusLost(java.awt.event.FocusEvent e) {
                 txtnota2FocusLost();
             }
         });
         txtNota2.addKeyListener(new java.awt.event.KeyAdapter() {
             @Override
-            public void keyTyped(java.awt.event.KeyEvent evt) {
+            public void keyTyped(java.awt.event.KeyEvent e) {
                 registrarAlteracao();
             }
         });
@@ -181,7 +183,7 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
 
         estatisticas.addKeyListener(new java.awt.event.KeyAdapter() {
             @Override
-            public void keyTyped(java.awt.event.KeyEvent evt) {
+            public void keyTyped(java.awt.event.KeyEvent e) {
                 registrarAlteracao();
             }
         });
@@ -273,8 +275,8 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
         ));
         tabelAlunoDisciplinas.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tabelAlunoDisciplinasMouseClicked(evt);
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                tabelAlunoDisciplinasMouseClicked();
             }
         });
         jScrollPane1.setViewportView(tabelAlunoDisciplinas);
@@ -398,12 +400,7 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
 
-    private void formWindowOpened() {
-        getListaDisciplinas();
-        getDisciplinasDoAluno();
-    }
-
-    private void tabelAlunoDisciplinasMouseClicked(java.awt.event.MouseEvent evt) {
+    private void tabelAlunoDisciplinasMouseClicked() {
         if (tabelAlunoDisciplinas.getSelectedRow() >= 0) {
             em = (AlunoDisciplinaTableModel) tabelAlunoDisciplinas.getModel();
             AlunoDisciplina adicionar = em.getAlunoDisciplina(tabelAlunoDisciplinas.getSelectedRow());
@@ -416,13 +413,14 @@ public class AlunoDisciplinaView extends javax.swing.JFrame {
                 jRadioButtonPrimeiro.setSelected(false);
             }
 
-            txtAno.setText(tabelAlunoDisciplinas.getValueAt(tabelAlunoDisciplinas.getSelectedRow(), 2).toString());
-            txtNota1.setText(tabelAlunoDisciplinas.getValueAt(tabelAlunoDisciplinas.getSelectedRow(), 4).toString());
-            txtNota2.setText(tabelAlunoDisciplinas.getValueAt(tabelAlunoDisciplinas.getSelectedRow(), 5).toString());
-            midia.setText(tabelAlunoDisciplinas.getValueAt(tabelAlunoDisciplinas.getSelectedRow(), 6).toString());
-            estatisticas.setText(tabelAlunoDisciplinas.getValueAt(tabelAlunoDisciplinas.getSelectedRow(), 7).toString());
+            int selectedRow = tabelAlunoDisciplinas.getSelectedRow();
+            txtAno.setText(tabelAlunoDisciplinas.getValueAt(selectedRow, 2).toString());
+            txtNota1.setText(tabelAlunoDisciplinas.getValueAt(selectedRow, 4).toString());
+            txtNota2.setText(tabelAlunoDisciplinas.getValueAt(selectedRow, 5).toString());
+            midia.setText(tabelAlunoDisciplinas.getValueAt(selectedRow, 6).toString());
+            estatisticas.setText(tabelAlunoDisciplinas.getValueAt(selectedRow, 7).toString());
 
-            String disco = tabelAlunoDisciplinas.getValueAt(tabelAlunoDisciplinas.getSelectedRow(), 1).toString();
+            String disco = tabelAlunoDisciplinas.getValueAt(selectedRow, 1).toString();
 
             for (int i = 0; i < comboDisciplinas.getItemCount(); i++) {
                 Disciplinas d = (Disciplinas) comboDisciplinas.getItemAt(i);
