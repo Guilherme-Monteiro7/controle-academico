@@ -70,7 +70,3 @@ O processo de melhoria contínua envolveu dezenas de commits direcionados a dife
 | **Padrão de Coleções (DAOs)** | Uso estrito de implementações concretas (`ArrayList`) | Adoção de boas práticas com interfaces `List` | Redução do acoplamento de código |
 
 ---
-
-## 📄 Próximos Passos
-* Finalização do **Relatório Técnico em PDF** com a documentação detalhada dos prompts, métricas exatas e discussões críticas.
-* Conclusão dos slides e preparação para a **Apresentação** oficial do trabalho prático.
